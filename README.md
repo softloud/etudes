@@ -58,7 +58,7 @@ This is a basic example which shows you how to solve a common problem:
 # I keep meaning to read that book about breaking things to see how they work, but I'm too busy, you know, breaking things. 
 ```
 
-Tasks
+Ideas
 =====
 
 -   Look through garthtarr's resources on parallel-core computing.
