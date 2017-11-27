@@ -63,7 +63,8 @@ This is a basic example which shows you how to solve a common problem:
 
 # Huh. Well, there you go. 
 
-# I keep meaning to read that book about breaking things to see how they work, but I'm too busy, you know, breaking things. 
+# I keep meaning to read that book about breaking things to see how they work, 
+# but I'm too busy, you know, breaking things. 
 ```
 
 # Ideas
