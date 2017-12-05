@@ -17,13 +17,17 @@ knitr::opts_chunk$set(
 ```
 
 
-# Tasks
+# Tasks 
 
 - Work through [this](http://db.rstudio.com/dplyr/).
 
+## Uncategorised thoughts
+
+- This [SQL translation](https://cran.r-project.org/web/packages/dbplyr/vignettes/sql-translation.html) thing could be useful.
+
 # Introductory level
 
-## First thoughts
+
 
 # How to vignette instructions
 

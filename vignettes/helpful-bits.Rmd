@@ -1,0 +1,23 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# How to embed a shiny app in a website
+
+`<iframe src="website" style="border: none; width: 440px; height: 900px"></iframe>`
+
+Change the website to your shiny app website address and you can adjust the width and height as well. Notice that you will not see anything if you knit it using Rstudio markdown. But it will show the results when you open it on browser.
