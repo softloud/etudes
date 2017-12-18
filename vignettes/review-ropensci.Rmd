@@ -83,7 +83,7 @@ As @joethorley noted, there are one or two functions that are missing an example
 
 #### Testing 
 
-There was one failure when running tests. This looks very minor, if it is anything to worry about. 
+There was one failure when running tests. This looks very minor, if it is anything to worry about. The tests also appear comprehensive.
 
 ```
 ==> devtools::test()
