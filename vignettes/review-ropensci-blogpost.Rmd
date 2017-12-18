@@ -1,0 +1,38 @@
+---
+title: "An Ode to Testing: my first review"
+author: "Charles T. Gray"
+date: "`r dontpanic::title_date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
+library(wordcountaddin)
+
+```
+
+To give you an idea of where I am in my `R` developer germination, I'd just started reading about [testing](http://r-pkgs.had.co.nz/tests.html) when I received an email from @rOpenSci inviting me to review a package for them. 
+
+In terms of formal computer science training, I took one subject in first year, appropriately named *OOF*. I feel like I'm mashing together garbled terms and defintions when I try to speak about computers. I am almost always befuddled by regexes on the rare occasions I come across them. 
+
+Many of us in the `R` community feel like [imposters](https://en.wikipedia.org/wiki/Impostor_syndrome) when it comes to software development. In fact, as a statistician, it was a surprise to me when I was first called a developer recently. Through undertaking this review, which began with the revelation that I'm not alone in thinking, ["What if I have absolutely nothing to say other than, yes, this is, in fact a package?!"](https://ropensci.org/blog/2017/08/22/first-package-review/), I have come to see that all `R` users are `R` family (aw). 
+
+No doubt these are well worn cobblestones that I judder my bmx along. So, what was different about my experience?
+
+I was delighted that the [`testthat`](https://cran.r-project.org/web/packages/testthat/README.html) package was part of the recommended reviewer workflow, as well as other novel tools from [`devtools`(https://github.com/hadley/devtools) such as `check` and 
+
+
+#
+There are broad experiences, yes, but also unique experiences to where you're at. 
+
+
+the `R` package 

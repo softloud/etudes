@@ -1,155 +1,19 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "review-ropensci-final"
+author: "Trouble"
+date: "17/12/2017"
+output: html_document
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
-
-# Tasks
-
-- ~~Copy twitter message into this document.~~
-- ~~Find links to the the two blog posts.~~
-- ~~Read both blog posts.~~
-- ~~Copy in email from Scott.~~
-- Mara gives a number of links. See what's extra and different from Scott's email. 
-- Go through tthe rOpenSci packaging guide first; then do Mozilla reviewing guide.
-- Clone package.
-- ~~Try `covr` on it. NB: need to follow special [instructions](https://github.com/r-lib/covr).~~
-- Now for making sense of the `covr` report.
-- Also `devtools::check()` and `devtools::test()`. 
-
-
-# Resources
-
-- Original email from Scott.
-- Scott: [reviewer's guide](https://github.com/ropensci/onboarding/blob/master/reviewing_guide.md)
-- Scott: [rOpenSci standards](https://github.com/ropensci/onboarding/blob/master/packaging_guide.md)
-- Scott: [reviewer's template](https://github.com/ropensci/onboarding/blob/master/reviewer_template.md)
-- SB sent me a message on twitter.
-- Also sent me links on twitter in response to my post.
-- Mara Averick wrote about her [first review](https://ropensci.org/blog/2017/08/22/first-package-review/)
-- Original email from Scott:
-
-Dear Charles,
-
-I'm writing to ask if you would be willing to review a package for rOpenSci. As you know, rOpenSci conducts peer review of R packages contributed to our collection in a manner similar to journals.
-
-The package, weathercan is a submission from Steffi LaZerte. You can find it on GitHub here: https://github.com/steffilazerte/weathercan  We conduct our open review process via GitHub as well, here: https://github.com/ropensci/onboarding/issues/160 
-
-If you accept, note that we ask reviewers to complete reviews in three weeks. (We’ve found it takes a similar amount of time to review a package as an academic paper.) 
-
-Our reviewers guide details what we look for in a package review, and includes links to example reviews. Our standards are detailed in our packaging guide, and we provide reviewer template for you to use. If you have questions or feedback, feel free to ask me or post to the rOpenSci forum.
-
-
-Are you able to review? If you can not, suggestions for alternate reviewers are always helpful. If I don't hear from you within a week, I will assume you are unable to
-review at this time. 
-
-Thank you for your time.
-
-Sincerely,
-Scott Chamberlain
-
-- Message from Stefanie
-Your first review! for rOpenSci!
-
-I had to go look and see what pkg it is. Neat connection of no real significance other than community for the win! My comments here should have no bearing on your review.
-
-The `weathercan` pkg is submitted by people who work for the provincial government of British Columbia, Canada. I live in Kamloops, BC, therefore proud. One of the authors, Sam Albers, recently had a separate package onboarded and they worked hard to get the powers that be to allow the software to be housed at rOpenSci GitHub (rather than hanging onto it themselves). They are going to write a blog post about the process and noting that it's pretty cool to have a government department release their code in the open.
-
-Anyway. So cool that you've volunteered to review for rOpenSci. People tend to say they learn a lot. We've hosted a couple of blog posts written by first-time reviewers, so do let me know if that's something you're interested in doing. No obligation to commit. 
-
-Enjoy!
 
 # Review
 
 I have been asked to review the [`weathercan`](https://github.com/steffilazerte/weathercan) package.
 
 This review is tracked on [GitHub](https://github.com/ropensci/onboarding/issues/160).
-
-# rOpenSci Package Reviewing Guide
-
-To review a package, please begin by copying our [reviewer template](reviewer_template.md)
-and using it as a high-level checklist.  In addition to checking off the minimum criteria,
-we ask you provide general comments addressing the following:
-
-- Does the code comply with general principles in the [Mozilla reviewing guide](https://mozillascience.github.io/codeReview/review.html)?
-- Does the package comply with the [ROpenSci packaging guide](https://github.com/ropensci/onboarding/blob/master/packaging_guide.md)?
-- Are there improvements that could be made to the code style?
-- Is there code duplication in the package that should be reduced?
-- Are there user interface improvements that could be made?
-- Are there performance improvements that could be made?
-- Is the documentation (installation instructions/vignettes/examples/demos) clear and sufficient?
-
-We encourage you to use automated tools to facilitate your reviewing.  These
-include:
-
--  Checking the package's logs on its continuous integration services (Travs-CI, Codecov, etc.)
--  Running `devtools::check()` and `devtools::test()` on the package to find any errors that may be missed on the author's system.
--  Using the **covr** package to examine the extent of test coverage.
--  Using the [**goodpractice**](https://github.com/MangoTheCat/goodpractice) package (`goodpractice::gp()`) to identify likely sources of errors and style issues.
--  Using `devtools::spell_check()` to find spelling errors in DESCRIPTION and
-manual files, and RStudio's spellchecker to find spelling errors in vignettes and
-README files.
-
-Please be respectful and kind to the authors in your reviews. Our [code of conduct](policies.md#code-of-conduct) is mandatory for everyone involved in our review process.
-
-First-time reviewers may find it helpful to read some previous reviews.  Here are reviews of [**rusda**](https://github.com/ropensci/onboarding/issues/18), [**textreuse**](https://github.com/ropensci/onboarding/issues/20), and [**Ropenaq**](https://github.com/ropensci/onboarding/issues/24).  The review of [**dbhydroR**](https://github.com/ropensci/onboarding/issues/61) uses our up-to-date reviewer's template.
-
-We encourage you to ask questions and provide feedback on the review process on our [forum](https://discuss.ropensci.org). 
-
-## Submitting the Review
-
-- When your review is complete, paste it as a comment into the package onboarding issue.
-- Please strive to complete your review within 3 weeks of accepting a review request. We will aim to remind reviewers of upcoming and past due dates. Editors may assign
-additional or alternate reviewers if a review is excessively late.
-- Additional comments are welcome in the same issue as a package onboarding request. We hope that package reviews will work as an ongoing conversation with the authors as opposed to a single round of reviews typical of manuscripts.
-- You may also submit issues or pull requests directly to the package repo if you choose, but if you do, please link to them in the onboarding repo comment thread so we have a centralized record of your review.
-- Please include an estimate of how many hours you spent on your review at the end of your review.
-
-## Review follow-up
-
-Authors should respond to the review within 2 weeks with their changes to the package
-in response to your review.  At this stage, we ask that you respond as to whether
-the change sufficiently address any issues raised in your review. We encourage
-ongoing discussion between package authors and reviewers, and you may ask editors
-to clarify issues in the review thread, as well.
-
-## Longer stuff 
-
-- Does the code comply with general principles in the [Mozilla reviewing guide](https://mozillascience.github.io/codeReview/review.html)?
-
-### Review Checklists
-
-#### Intrinsic Examination 
-
-looks for elements internal to the new code under review, without worrying too much about its context or the broader project. Some things to look for:
-
-- Are functions as simple as possible? We insisted in our submission guidelines that functions be short, but this is really a simple proxy for our true goal: to ensure that functions are modular. A modular function is one that does exactly one thing, and does it well - by insisting on breaking code up into the simplest possible functions, we make them easy to test, easy to understand, and easy to review. Can any of the functions in this new submission be broken up into simpler steps?
-
-- Is the code efficient? If some really slow operation is performed in the code, it should be performed as infrequently as possible. For example, diagonalizing a matrix can be a slow computation. If the new code needs to do a slow operation like this, it should do it once only, and store the result for use, rather than recomputing it every time it needs to use it. Not sure which operations are slow? Assume they all are! Don't repeat any operation unnecessarily - we call this well factored code.
-- Is the usage of each function clear? Try and put yourself in the mindset of someone coming to this code for the first time; how would they know how to re-use the existing code? The documentation for each function should have, at a minimum, a short description of the function, and a specification of its inputs and outputs.
-- Have edge cases been considered? Users will invariably do all kinds of things with your code that they aren't supposed to. If the user does something unexpected (atypical inputs, clicking on things they're not supposed to...), will this new code break, or will it roll with the punches? For example, if a function takes a numerical input, is there a situation where division by 0 could be triggered?
-
-#### Extrinsic Examination 
-
-considers how this new code is going to fit into the project as a whole. Some things to think about:
-
-- Does the new code reinvent any wheels? New code should be just that - new. If it's reproducing functionality you have elsewhere in the code, it shouldn't be repeated here. This is another reason for insisting on splitting functions up into small and reusable pieces; shared functionality can be written, reviewed and debugged just once, rather than over and over again in different contexts.
-- Does the new code successfully address the needs of the project? By sketching out that five-minute plan and having had a conversation with your contributors about what their new contribution is trying to address, you created a clear goal for this new work; does this contribution push the project forward by addressing those plans and discussions?
-- Does the new code respect the structure of the project? A healthy project is a well organized project with a high degree of standardization. If the rest of the code has established variable naming conventions, file structure, or other patterns, does this new code uphold those patterns?
-
-# Reviewer's checklist
 
 ## Package Review
 
@@ -164,29 +28,29 @@ The package includes all the following forms of documentation:
 * [x] **A statement of need** clearly stating problems the software is designed to solve and its target audience in README
 * [x] **Installation instructions:** for the development version of package and any non-standard dependencies in README
 * [ ]**Vignette(s)** demonstrating major functionality that runs successfully locally
-* [ ]**Function Documentation:** for all exported functions in R help
+* [x]**Function Documentation:** for all exported functions in R help
 * [ ]**Examples** for all exported functions in R Help that run successfully locally
-* [ ]**Community guidelines** including contribution guidelines in the README or CONTRIBUTING, and DESCRIPTION with `URL`, `BugReports` and `Maintainer` (which may be autogenerated via `Authors@R`).
+* [x]**Community guidelines** including contribution guidelines in the README or CONTRIBUTING, and DESCRIPTION with `URL`, `BugReports` and `Maintainer` (which may be autogenerated via `Authors@R`).
 
 >##### For packages co-submitting to JOSS
 >
->* [ ]The package has an **obvious research application** according to [JOSS's definition](http://joss.theoj.org/about#submission_requirements)
+>* [x]The package has an **obvious research application** according to [JOSS's definition](http://joss.theoj.org/about#submission_requirements)
 >
 >The package contains a `paper.md` matching [JOSS's requirements](http://joss.theoj.org/about#paper_structure) with:
 >
->* [ ]**A short summary** describing the high-level functionality of the software
->* [ ]**Authors:**  A list of authors with their affiliations
->* [ ]**A statement of need** clearly stating problems the software is designed to solve and its target audience.
->* [ ]**References:** with DOIs for all those that have one (e.g. papers, datasets, software).
+>* [x]**A short summary** describing the high-level functionality of the software
+>* [x]**Authors:**  A list of authors with their affiliations
+>* [x]**A statement of need** clearly stating problems the software is designed to solve and its target audience.
+>* [x]**References:** with DOIs for all those that have one (e.g. papers, datasets, software).
 
 #### Functionality
 
-* [ ]**Installation:** Installation succeeds as documented.
-* [ ]**Functionality:** Any functional claims of the software been confirmed.
-* [ ]**Performance:** Any performance claims of the software been confirmed.
-* [ ]**Automated tests:** Unit tests cover essential functions of the package
+* [x]**Installation:** Installation succeeds as documented.
+* [x]**Functionality:** Any functional claims of the software been confirmed.
+* [x]**Performance:** Any performance claims of the software been confirmed.
+* [x]**Automated tests:** Unit tests cover essential functions of the package
    and a reasonable range of inputs and conditions. All tests pass on the local machine.
-* [ ]**Packaging guidelines**: The package conforms to the rOpenSci packaging guidelines
+* [ ]**Packaging guidelines**: The package conforms to the [ROpenSci packaging guide](https://github.com/ropensci/onboarding/blob/master/packaging_guide.md)
 
 #### Final approval (post-review)
 
@@ -198,342 +62,41 @@ Estimated hours spent reviewing:
 
 ### Review Comments
 
-# Package reviewing guide as a template.
+I appreciate the opportunity to review a package like this; I learnt a lot from its well-designed structure. I like the idea of a  `tidy`-friendly `glossary` dataframe with accompanying vignette.
 
-> To review a package, please begin by copying our [reviewer template](reviewer_template.md) and using it as a high-level checklist.  In addition to checking off the minimum criteria,
-we ask you provide general comments addressing the following:
+#### Vignettes 
 
-> Does the code comply with general principles in the [Mozilla reviewing guide](https://mozillascience.github.io/codeReview/review.html)?
+Now I don't know if this is something to do with my inexperience, but I couldn't get the vignettes to run. In fact, I struggled to access them at all. 
 
-
-> Does the package comply with the [ROpenSci packaging guide](https://github.com/ropensci/onboarding/blob/master/packaging_guide.md)?
-
-
-> Are there improvements that could be made to the code style?
-
-
-> Is there code duplication in the package that should be reduced?
-
-
-> Are there user interface improvements that could be made?
-
-
-> Are there performance improvements that could be made?
-
-
-> Is the documentation (installation instructions/vignettes/examples/demos) clear and sufficient?
-
->We encourage you to use automated tools to facilitate your reviewing.  These
-include:
-
->  Checking the package's logs on its continuous integration services (Travs-CI, Codecov, etc.)
-
->  Running `devtools::check()` and `devtools::test()` on the package to find any errors that may be missed on the author's system.
-
->  Using the **covr** package to examine the extent of test coverage.
-
->  Using the [**goodpractice**](https://github.com/MangoTheCat/goodpractice) package (`goodpractice::gp()`) to identify likely sources of errors and style issues.
-
->  Using `devtools::spell_check()` to find spelling errors in DESCRIPTION and manual files, and RStudio's spellchecker to find spelling errors in vignettes and README files.
-
-> Please be respectful and kind to the authors in your reviews. Our [code of conduct](policies.md#code-of-conduct) is mandatory for everyone involved in our review process.
-
-> First-time reviewers may find it helpful to read some previous reviews.  Here are reviews of [**rusda**](https://github.com/ropensci/onboarding/issues/18), [**textreuse**](https://github.com/ropensci/onboarding/issues/20), and [**Ropenaq**](https://github.com/ropensci/onboarding/issues/24).  The review of [**dbhydroR**](https://github.com/ropensci/onboarding/issues/61) uses our up-to-date reviewer's template.
-
-> We encourage you to ask questions and provide feedback on the review process on our [forum](https://discuss.ropensci.org). 
-
-## Submitting the Review
-
-- When your review is complete, paste it as a comment into the package onboarding issue.
-- Please strive to complete your review within 3 weeks of accepting a review request. We will aim to remind reviewers of upcoming and past due dates. Editors may assign
-additional or alternate reviewers if a review is excessively late.
-- Additional comments are welcome in the same issue as a package onboarding request. We hope that package reviews will work as an ongoing conversation with the authors as opposed to a single round of reviews typical of manuscripts.
-- You may also submit issues or pull requests directly to the package repo if you choose, but if you do, please link to them in the onboarding repo comment thread so we have a centralized record of your review.
-- Please include an estimate of how many hours you spent on your review at the end of your review.
-
-## Review follow-up
-
-Authors should respond to the review within 2 weeks with their changes to the package
-in response to your review.  At this stage, we ask that you respond as to whether
-the change sufficiently address any issues raised in your review. We encourage
-ongoing discussion between package authors and reviewers, and you may ask editors
-to clarify issues in the review thread, as well.
-
-# rOpenSci Packaging Guide
-
-rOpenSci accepts packages that meet our guidelines via a streamlined [onboarding process](https://github.com/ropensci/onboarding). To ensure a consistent style across all of our tools we have developed this concise guide. We strongly recommend that package developers read Hadley Wickham's concise but thorough book on package development which is available for [free online](http://r-pkgs.had.co.nz/) (and [print](http://www.amazon.com/dp/1491910593/ref=cm_sw_su_dp?tag=r-pkgs-20)).
-
-## Sections (in order of importance)
-
-* [Package naming](#pkgnaming)
-* [Function/variable naming](#funvar)
-* [README](#rme)
-* [Code of conduct](#conduct)
-* [Documentation](#docs)
-* [News](#news)
-* [Authorship](#authorship)
-* [Package dependencies](#deps)
-* [Testing](#testing)
-* [Continuous integration](#ci)
-* [Console messages](#messages)
-* [Recommended software scaffolding](#tools)
-* [Miscellaneous CRAN gotchas](#misc)
-* [Further guidance](#further)
-* [Suggestions and Updates](#suggestions)
-
-## <a href="#pkgnaming" name="pkgnaming"></a> Package naming
-
-* We strongly recommend short, descriptive names in lower case. If your package deals with one or more commercial services, please make sure the name does not violate branding guidelines. You can check if your package name is available, informative and not offensive by using the [`available` package](https://github.com/ropenscilabs/available).
-
-> `weathercan` is a good name - **weather** from **Can**ada. 
-
-## <a href="#funvar" name="funvar"></a> Function/variable naming & general syntax
-
-* We strongly recommend `snake_case` over all other styles unless you are porting over a package that is already in wide use.
-
-> TODO: Keep an eye for this.
-
-* Avoid function name conflicts with base packages or other popular ones (e.g. `ggplot2`, `dplyr`, `magrittr`, `data.table`)
-
-> TODO: Keep an eye for this.
-
-* Consider an `object_verb()` naming scheme for functions in your package that take a common data type or interact with a common API. `object` refers to the data/API and `verb` the primary action.  This scheme helps avoid namespace conflicts with packages that may have similar verbs, and makes code readable and easy to auto-complete.  For instance, in **stringi**, functions starting with `stri_` manipulate strings (`stri_join()`, `stri_sort()`, and in **googlesheets** functions starting with `gs_` are calls to the Google Sheets API (`gs_auth()`, `gs_user()`, `gs_download()`).
-
-> TODO: Keep an eye for this.
-
-* For functions that manipulate an object/data and return an object/data of the same type, make the object/data the first argument of the function so as to enhance compatibility with the pipe operator (`%>%`)
-
-> TODO: Keep an eye for this.
-
-* For more information on how to style your code, name functions, and R scripts inside the `R/` folder, we recommend reading the [code chapter in Hadley's book](http://r-pkgs.had.co.nz/r.html).
-
-
-## <a href="#rme" name="rme"></a> README
-
-* All packages should have a README file, named `README.md`, in the root of the repository. The README should include, from top to bottom (see [this example](https://github.com/karthik/badge-test/)):
-
+Just in case this is an OS thing, I'm trying this out on a Macbook Air High Sierra i5 from 2014. Let me know if there's any other information you need from me. 
 ```
-* Checked: The package name
-* Checked: Badges for continuous integration and test coverage, the badge for rOpenSci peer-review once it has started (see below), and any other badges
-* Checked: Short description of the package
-* Checked: Installation instructions
-* Checked: Brief demonstration usage
-* Didn't find: Citation information
-```
-
-> Didn't find the citation information. Is there somewhere obvious to look that I missed? (Like the badge.)
-
-* Once you have submitted a package and it has passed editor checks, add a peer-review badge via
-
-```
-[![](https://badges.ropensci.org/<issue_id>_status.svg)](https://github.com/ropensci/onboarding/issues/<issue_id>)
-```
-
-where issue_id is the number of the issue in the onboarding repository. For instance, the badge for [`rtimicropem`](https://github.com/ropensci/rtimicropem) review uses the number 126 since it's the [review issue number](https://github.com/ropensci/onboarding/issues/126). The badge will first indicated "under review" and then "peer-reviewed" once your package has been onboarded, and will link to the review issue.
-
-> Done.
-
-* If your package connects to a data source or online service, or wraps other software,
-consider that your package README may be the first point of entry for users.  It should provide enough information for users to understand the nature of the data, service, or software, and provide links to other relevant data and documentation.  For instance,
-a README should not merely read, "Provides access to GooberDB," but also include,
-"..., an online repository of Goober sightings in South America.  More
-information about GooberDB, and documentation of database structure and metadata
-can be found at *link*.
-
-* We recommend not creating `README.md` directly, but from a `README.Rmd` file (an Rmarkdown file) if you have any demonstration code. The advantage of the `.Rmd` file is you can combine text with code that can be easily updated whenever your package is updated.
-
-* Extensive examples should be kept for a vignette. If you want to make the vignettes more accessible before installing the package, we suggest creating a website for your package with [`pkgdown`](https://github.com/hadley/pkgdown)
-
-* Consider using `devtools::use_readme_rmd()` to get a template for a `README.Rmd` file
-and to automatically set up a pre-commit hook to ensure that `README.md` is always newer than `README.Rmd`.
-
-* _After_ a package is accepted, the rOpenSci footer should be added to the bottom of the README file with the following markdown line:
-
-```
-[![ropensci_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
-```
-
-* See the [gistr README](https://github.com/ropensci/gistr#gistr) for a good example README to follow.
-
-## <a href="#conduct" name="conduct"></a> Code of Conduct
-
-* We recommend that you use a code of conduct such as the [Contributor Covenant](http://contributor-covenant.org/) in developing your package.  You can document your code of conduct in a `CODE_OF_CONDUCT.md` or `CONDUCT.md` file in the package root directory, and linking to this file from the `README.md` file.  `devtools::use_code_of_conduct()` will add the Contributor Covenant template to your package.
-
-## <a href="#docs" name="docs"></a> Documentation
-
-* All exported package functions should be fully documented with examples.
-
-* The package should contain top-level documentation for `?foobar`, (or
-`?foobar-package` if there is a naming conflict). Optionally, you can use
-	both `?foobar` and `?foobar-package` for the package level manual file,
-	using `@aliases` roxygen tag.
-
-* The package should contain at least one vignette providing an introduction to
-the primary package functions and use-cases.
-
-* As is the case for a README, top-level documentation or vignettes may
-be the first point of entry for users. If your package connects to a data source or online service, or wraps other software, it should provide enough information for users to understand the nature of the data, service, or software, and provide links to other relevant data and documentation.  For instance,
-a the vignette intro or documentation should not merely read, "Provides access to GooberDB," but also include,
-"..., an online repository of Goober sightings in South America.  More
-information about GooberDB, and documentation of database structure and metadata
-can be found at *link*.
-
-* We strongly encourage all submissions to use `roxygen2` for documentation.  `roxygen2` is [an R package](http://cran.r-project.org/web/packages/roxygen2/index.html) that automatically compiles `.Rd` files to your `man` folder in your package from simple tags written above each function.
-
-* More information on using roxygen2 [documentation](http://r-pkgs.had.co.nz/man.html) is available on the R packages book.
-
-* One key advantage of using `roxygen2` is that your `NAMESPACE` will always be automatically generated and up to date.
-
-* When using `roxygen2`, add `#' @noRd` to internal functions.
-
-## <a href="#news" name="news"></a> News
-
-* It is mandatory to use a `NEWS` or `NEWS.md` file in the root of your package.
-See the sample [NEWS file](news_template.md)
-* Update the news file before every CRAN release, with a section with the package name,
-version and date of release, like:
-
-```
-foobar 0.2.0 (2016-04-01)
-=========================
-```
-
-* Under that header, put in sections as needed, including: `NEW FEATURES`, `MINOR IMPROVEMENTS`,
-`BUG FIXES`, `DEPRECATED AND DEFUNCT`. Under each header list items as needed. For each item give
-a description of the new feature, improvement, bug fix, or deprecated function/feature. Link
-to any related GitHub issue like `(#12)`. The `(#12)` will resolve on GitHub in Releases to a
-link to that issue in the repo.
-* After you have added a `git tag` and pushed up to GitHub, add the news items for that
-tagged version to a Release on the Releases tab in your GitHub repo with a title like
-`pkgname v0.1.0`
-* If you use `NEWS`, add it to `.Rbuildignore`, but not if you use `NEWS.md`
-
-## <a href="#authorship" name="authorship"></a> Authorship
-
-The `DESCRIPTION` file of a package should list package authors and contributors to a package, using the `Authors@R` syntax to indicate their roles (author/creator/contributor etc.) if there is more than one author. See [this section of "Writing R Extensions"](https://cran.rstudio.com/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file) for details.  If you feel that your reviewers have made a substantial contribution to the development of your package, you may list them in the `Authors@R` field with a Reviewer contributor type (`"rev"`), like so:
-
-```
-    person("Bea", "Hernández", role = "rev",
-    comment = "Bea reviewed the package for ropensci, see <https://github.com/ropensci/onboarding/issues/116>"),
-```
-
-Only include reviewers after asking for their consent.  Note that 'rev' will raise a CRAN NOTE unless the package is built using R v3.5 (r-devel as of 2017-09-21).
-
-## <a href="#testing" name="testing"></a> Testing
-
-* All packages should pass `R CMD check`/`devtools::check()` on all major platforms.
-
-* All packages should have a test suite that covers major functionality of
-the package.
-
-* We recommend using `testthat` for writing tests. Strive to write tests as you write each new function. This serves the obvious need to have proper testing for the package, but allows you to think about various ways in which a function can fail, and to _defensively_ code against those. [More information](http://r-pkgs.had.co.nz/tests.html).
-
-* `testthat` has a function `skip_on_cran()` that you can use to not run tests on CRAN. We recommend using this on all functions that are API calls since they are quite likely to fail on CRAN. These tests will still run on Travis.
-
-* Check the extent of your test coverage using the [**covr** package](https://github.com/jimhester/covr). Including a coverage badge in your package's README makes it easy for reviewers to see how well-tested your package is. 100% coverage is not required, but editors
-and reviewers will use coverage reports as a starting point to evaluate that
-your test suite covers the important functionality of your package.
-
-
-* Even if your use [continuous integration](#ci), we recommend that you run tests locally prior to submitting your package, as some tests are often skipped. (You may need
-to set `Sys.setenv(NOT_CRAN="true")` in order to ensure all tests are run.) In addition, we recommend that prior to submitting your package, you use Gabor Csardi's [**goodpractice**](https://github.com/MangoTheCat/goodpractice/) package to check your package for likely sources of errors, and run `devtools::spell_check()` to 
-find spelling errors in documentation.
-
-## <a href="#ver" name="ver"></a> Versioning
-
-* We strongly recommend that rOpenSci packages use semantic versioning. A detailed explanation is available on the [description chapter](http://r-pkgs.had.co.nz/description.html#version).
-
-* Git tag each release after every submission to CRAN. [[more info](http://marker.to/ZYd3kZ)]
-
-## <a href="#ci" name="ci"></a> Continuous integration
-
-* All rOpenSci packages must use one form of continuous integration. This ensures that all commits, pull requests, and new branches are run through `R CMD check`. R is now a [natively supported language on Travis-CI](http://blog.travis-ci.com/2015-02-26-test-your-r-applications-on-travis-ci/), making it easier than ever to do continuous integration. See [R Packages](http://marker.to/NEr8Bd) and Julia Silge's [Beginner's Guide to Travis-CI for R](http://juliasilge.com/blog/Beginners-Guide-to-Travis/) for more help. Travis offers continuous integration for Linux and Mac OSX. For continuous integration on Windows, see [R + Appveyor](https://github.com/krlmlr/r-appveyor). R packages that use compiled code or link
-to other libraries or languages should have CI for all platforms.
-
-* R packages that use compiled code or link to other libraries or languages should have CI for all platforms.
-
-* Continuous integration should also include reporting of test coverage via
-a testing service such [CodeCov](https://codecov.io/) or [Coveralls](https://coveralls.io/).  See the [README for the **covr** package](https://github.com/jimhester/covr) for instructions, as well
-as `devtools::use_coverage()`. 
-
-* Both test status and code coverage should be reported via a badge in your
-package README.
-
-## <a href="#egs" name="egs"></a> Examples
-
-* Include extensive examples in the documentation. In addition to demonstrating how to use the package, these can act as an easy way to test package functionality before there are proper tests. However, keep in mind we require tests in contributed packages. If you prefer not to clutter up code with extensive documentation, place further documentation/examples in files in a `man-roxygen` folder in the root of your package, and those will be combined into the manual file by the use of `@template <file name>`, for example. You can run examples with `devtools::run_examples()`.
-
-
-## <a href="#deps" name="deps"></a> Package dependencies
-
-* Use `Imports` instead of `Depends` for packages providing functions from other
-packages. Make sure to list packages used for testing (`testthat`), and documentation (`knitr`, `roxygen2`) in your `Suggests` section of package dependencies. If you use any packages in your examples sections, make sure to list those, if not already listed elsewhere, in `Enhances` section of package dependencies.
-
-* For most cases where you must expose functions from dependencies to the user,
-you should import and re-export those individual functions rather than listing
-them in the `Depends` fields.  For instance, if functions in your package produce
-`raster` objects, you might re-export only printing and plotting functions from the
-**raster** package.
-
-## <a href="#tools" name="tools"></a> Recommended scaffolding
-
-
-* For http requests we strongly recommend using `httr` over `RCurl`.
-* For parsing JSON, use `jsonlite` instead of `rjson` or `RJSONIO`.
-* For parsing, creating, and manipulating XML, we strongly recommend `xml2` for most cases.
-
-## <a href="#messages" name="messages"></a> Console messages
-
-* Use `message()` and `warning()` to communicate with the user in your functions. Please do not use `print()` or `cat()` unless it's for a `print.*()` method, as these methods of printing messages are harder for the user to suppress.
-
-##  <a href="#misc" name="messages"></a> Miscellaneous
-
-This is a collection of CRAN gotchas that are worth avoiding at the outset.
-
-* Make sure your package title is in Title Case.
-* Do not put a period on the end of your title
-* Avoid starting the description with the package name or This package ...
-* Make sure you include links to websites if you wrap a web API, scrape data from a site, etc. in the `Description` field of your `DESCRIPTION` file
-* Avoid long running tests and examples.  Consider `testthat::skip_on_cran` in tests to skip things that take a long time but still test them locally and on Travis.
-* Include top-level files such as `paper.md`, `.travis.yml` in your `.Rbuildignore` file.
-
-## <a href="#further" name="further"></a> Further guidance
-
-* Hadley Wickham's _R Packages_ is an excellent, readable resource on package development and is available a a [free book on the web](http://r-pkgs.had.co.nz/).
-
-* [Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html) is the canonical, usually most up-to-date, reference for creating R packages.
-
-* If you are submitting a package to rOpenSci via the [onboarding repo](https://github.com/ropensci/onboarding), you can direct further questions to the rOpenSci team in the issue tracker, or in our [discussion forum](https://discuss.ropensci.org/).
-
-## <a href="#suggestions" name="suggestions"></a> Suggestions and updates
-
-* These packaging guidelines are a work in progress for packages contributed to the rOpenSci suite. Corrections, suggestions and general improvements are welcome as [issue submissions in this repository](https://github.com/ropensci/onboarding/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3Ameta%20). Open discussions are welcome in our [forum](https://discuss.ropensci.org/).
-
-# `covr` report
-
-> covr::report()
-Error: Failure in `/private/var/folders/14/wjywnt652812ymk3rmj555jh0000gp/T/RtmpRUd62h/R_LIBS9bf214eae500/weathercan/weathercan-tests/testthat.Rout.fail`
-> library(testthat)
 > library(weathercan)
-> 
-> Sys.setenv("R_TESTS" = "")
-> 
-> test_check("weathercan")
+> vignette("usage") # No output other than warning.
+Warning message: 
+vignette ‘usage’ not found 
+> vignette("broom") # The broom vignette opens in the Help pane. 
+```
 
-Attaching package: ‘magrittr’
+#### Examples
 
-The following objects are masked from ‘package:testthat’:
+As @joethorley noted, there are one or two functions that are missing an example. When I went back through I think it was just `stations_all` that needs a brief example for the function documentation to conform to the rOpenSci package guide. 
 
-    equals, is_less_than, not
+#### Testing 
 
-1. Failure: approx_na_rm (time) without NAs pads NAs at start/end (@test_interpolate.R#58) 
-`a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time, na_gap = lubridate::hours(2)) produced warnings.`
+There was one failure when running tests. This looks very minor, if it is anything to worry about. 
 
+```
+==> devtools::test()
 
-2. Failure: approx_na_rm (time) replaces gaps with NAs (@test_interpolate.R#72) 
-`a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time, na_gap = lubridate::hours(2)) produced warnings.`
-
-
-3. Failure: approx_na_rm (time) replaces gaps with NAs (@test_interpolate.R#76) 
-`a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time, na_gap = lubridate::hours(1)) produced warnings.`
-
+Loading weathercan
+Loading required package: testthat
+Testing weathercan
+✔ | OK F W S | Context
+✖ | 87 1     | Raw interpolation (time) [1.0 s]
+───────────────────────────────────────────────────────────────────────
+test_interpolate.R:78: failure: approx_na_rm (time) replaces gaps with NAs
+sum(is.na(a$y)) not equal to 195.
+1/1 mismatches
+[1] 0 - 195 == -195
+───────────────────────────────────────────────────────────────────────
+```
