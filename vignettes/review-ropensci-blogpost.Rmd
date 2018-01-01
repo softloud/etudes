@@ -41,3 +41,5 @@ I'm half-way through my doctorate in statistics. Up until now my until now, my a
 
 A wise man ( [@njtierney](https://github.com/njtierney) ) recently said to me that statisticians can learn a lot from the development community, and he was not wrong. Writing functions with documentation and tests felt [like this](https://www.youtube.com/watch?v=pMJFjjF_YAI&list=PLNeiyom4reItRo_Nim7BNNjOzpU5jIQqb&index=24). Not only do I know where everything is, but I can also trust that the functions work the way I intended in the documentation using testing. 
 
+No longer will Current Charles be cursing Past Charles for her inscrutible code!
+
