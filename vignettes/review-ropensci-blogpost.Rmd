@@ -1,23 +1,13 @@
 ---
 title: "An Ode to Testing: my first review"
 author: "Charles T. Gray"
-date: "`r dontpanic::title_date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+date: "02/01/2018"
+output: html_document
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-
-# devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
-library(wordcountaddin)
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(magrittr)
 ```
 
 To give you an idea of where I am in my `R` developer germination, I'd just started reading about [testing](http://r-pkgs.had.co.nz/tests.html) when I received an email from @rOpenSci inviting me to review a package for them. 
@@ -35,15 +25,32 @@ It all seemed straightforward when I was reading about it, but sitting down to w
 
 I must admit to holding out actually looking at the test code, I wanted to get a feel for the syntax first and have a try myself. So, when I did pop the hood on the tests directory, I appreciated it more. Looking at the tests written for this package, it is clear [@steffilazerte](https://github.com/steffilazerte/) is a good ways past reading the testing chapter for the first time. The tests sounded like [this](https://www.youtube.com/watch?v=Xf2jGSvsA7c). 
 
-<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/6A5EpqqDOdk" frameborder="0" allowfullscreen></iframe> -->
+```{r st m passion, fig.align='center', echo = FALSE}
+vembedr::embed_youtube("https://www.youtube.com/watch?v=Xf2jGSvsA7c") %>% 
+  htmltools::div(class = "vembedr") %>% 
+  htmltools::div(align = "center")
+```
 
-<iframe src="https://www.youtube.com/watch?v=Xf2jGSvsA7c" frameborder="0" allowfullscreen></iframe>
 
 So, I dragged my feet a bit on the review, largely because the more I read the more I had to revisit testing on my own packages. Thinking about someone else's tests made me want to explore what it was like to write a function along with its associated tests, *at the same time*. 
 
 I'm half-way through my doctorate in statistics. Up until now my until now, my analyses have been horrible `R` script files. Sometimes I'd source functions from other files but then worry they were broken. It sounded like [this](https://www.youtube.com/watch?v=sOUsbtUrXHk).
 
-A wise man ( [@njtierney](https://github.com/njtierney) ) recently said to me that statisticians can learn a lot from the development community, and he was not wrong. Writing functions with documentation and tests felt [like this](https://www.youtube.com/watch?v=pMJFjjF_YAI&list=PLNeiyom4reItRo_Nim7BNNjOzpU5jIQqb&index=24). Not only do I know where everything is, but I can also trust that the functions work the way I intended in the documentation using testing. 
+```{r orchestra fail, fig.align='center', echo = FALSE}
+vembedr::embed_youtube("https://www.youtube.com/watch?v=sOUsbtUrXHk") %>% 
+  htmltools::div(class = "vembedr") %>% 
+  htmltools::div(align = "center")
+```
 
-No longer will Current Charles be cursing Past Charles for her inscrutible code!
+
+A wise man ([@njtierney](https://github.com/njtierney)) recently said to me that statisticians can learn a lot from the development community, and he was not wrong. Writing functions with documentation and tests felt [like this](https://www.youtube.com/watch?v=pMJFjjF_YAI&list=PLNeiyom4reItRo_Nim7BNNjOzpU5jIQqb&index=24). 
+
+```{r theory of everything, fig.align='center', echo = FALSE}
+vembedr::embed_youtube("https://www.youtube.com/watch?v=pMJFjjF_YAI&list=PLNeiyom4reItRo_Nim7BNNjOzpU5jIQqb&index=24") %>% 
+  htmltools::div(class = "vembedr") %>% 
+  htmltools::div(align = "center")
+```
+
+
+Not only do I know where everything is, but I can also trust that the functions work the way I intended in the documentation using testing. No longer will Current Charles be cursing Past Charles for her inscrutible code!
 
