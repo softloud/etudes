@@ -35,6 +35,10 @@ It all seemed straightforward when I was reading about it, but sitting down to w
 
 I must admit to holding out actually looking at the test code, I wanted to get a feel for the syntax first and have a try myself. So, when I did pop the hood on the tests directory, I appreciated it more. Looking at the tests written for this package, it is clear [@steffilazerte](https://github.com/steffilazerte/) is a good ways past reading the testing chapter for the first time. The tests sounded like [this](https://www.youtube.com/watch?v=Xf2jGSvsA7c). 
 
+<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/6A5EpqqDOdk" frameborder="0" allowfullscreen></iframe> -->
+
+<iframe src="https://www.youtube.com/watch?v=Xf2jGSvsA7c" frameborder="0" allowfullscreen></iframe>
+
 So, I dragged my feet a bit on the review, largely because the more I read the more I had to revisit testing on my own packages. Thinking about someone else's tests made me want to explore what it was like to write a function along with its associated tests, *at the same time*. 
 
 I'm half-way through my doctorate in statistics. Up until now my until now, my analyses have been horrible `R` script files. Sometimes I'd source functions from other files but then worry they were broken. It sounded like [this](https://www.youtube.com/watch?v=sOUsbtUrXHk).
