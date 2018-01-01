@@ -100,3 +100,8 @@ sum(is.na(a$y)) not equal to 195.
 [1] 0 - 195 == -195
 ───────────────────────────────────────────────────────────────────────
 ```
+
+### Other tests
+
+I ran various other ad hoc tests, including the `goodpractice` package, but didn't find anything other than the one error thrown by `testthat` to report. So, barring a few minor tweaks, perhaps, the `weathercan` package seems ready for submission to me.  
+
