@@ -10,10 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 library(magrittr)
 ```
 
+<iframe src="https://open.spotify.com/embed/track/0kPhDUZe8IdoFVC6e24CnC" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+
 To give you an idea of where I am in my `R` developer germination, I'd just started reading about [testing](http://r-pkgs.had.co.nz/tests.html) when I received an email from @rOpenSci inviting me to review a package for them. 
 
-
-Many of us in the `R` community feel like [imposters](https://en.wikipedia.org/wiki/Impostor_syndrome) when it comes to software development. In fact, as a statistician, it was a surprise to me when I was recently called a developer. In terms of  formal computer science training, I took one subject in first year, appropriately named *OOF*. I am almost always befuddled by regexes on the rare occasions I come across them.
+Many of us in the `R` community feel like [imposters](https://en.wikipedia.org/wiki/Impostor_syndrome) when it comes to software development. In fact, as a statistician, it was a surprise to me when I was recently called a developer. In terms of  formal computer science training, I took one subject in first year, the appropriately initialised *OOF*. I am almost always befuddled by regexes on the rare occasions I come across them.
  
 However, through undertaking this review, which began with the revelation that I'm not alone in thinking, ["What if I have absolutely nothing to say other than, yes, this is, in fact a package?!"](https://ropensci.org/blog/2017/08/22/first-package-review/), I have come to see that all `R` users are `R` family (aw). No doubt these are well worn cobblestones that I judder my bicycle along. Despite this, it felt like a unqiue journey given my current fascination with testing. 
 
@@ -23,7 +24,7 @@ In this context, *testing* refers to a reproducible and more systematic approach
 
 It all seemed straightforward when I was reading about it, but sitting down to write tests for functions I hadn't looked at in a while was a daunting proposition. In a review, however, you're considering other people's functions and the questions that spring to mind are so much more obvious in an objective setting. For starters, do the tests cover all functions?  
 
-I must admit to holding out actually looking at the test code, I wanted to get a feel for the syntax first and have a try myself. So, when I did pop the hood on the tests directory, I appreciated it more. Looking at the tests written for this package, it is clear [@steffilazerte](https://github.com/steffilazerte/) is a good ways past reading the testing chapter for the first time. The tests sounded like [this](https://www.youtube.com/watch?v=Xf2jGSvsA7c). 
+I must admit to holding out actually looking at the test code, I wanted to get a feel for the syntax first and have a try myself. So, when I did pop the hood on the tests directory, I appreciated it more. Looking at the tests written for this package, it is clear [@steffilazerte](https://github.com/steffilazerte) is a good ways past reading the testing chapter for the first time. The tests sounded like [this](https://www.youtube.com/watch?v=Xf2jGSvsA7c). 
 
 ```{r st m passion, fig.align='center', echo = FALSE}
 vembedr::embed_youtube("https://www.youtube.com/watch?v=Xf2jGSvsA7c") %>% 
@@ -52,5 +53,5 @@ vembedr::embed_youtube("https://www.youtube.com/watch?v=pMJFjjF_YAI&list=PLNeiyo
 ```
 
 
-Not only do I know where everything is, but I can also trust that the functions work the way I intended in the documentation using testing. No longer will Current Charles be cursing Past Charles for her inscrutible code!
+Not only do I know where everything is, but I can also trust that the functions work the way I intended in the documentation using testing. No longer will Current Charles be cursing Past Charles for her inscrutable code!
 
