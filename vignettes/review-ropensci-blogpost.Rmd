@@ -10,9 +10,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library(magrittr)
 ```
 
+To give you an idea of where I am in my `R` developer germination, I'd just started reading about [testing](http://r-pkgs.had.co.nz/tests.html) when I received an email from @rOpenSci inviting me to review a package for them. 
+
+```{r}
+# Testing spotify embedding.
+```
+
 <iframe src="https://open.spotify.com/embed/track/0kPhDUZe8IdoFVC6e24CnC" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 
-To give you an idea of where I am in my `R` developer germination, I'd just started reading about [testing](http://r-pkgs.had.co.nz/tests.html) when I received an email from @rOpenSci inviting me to review a package for them. 
 
 Many of us in the `R` community feel like [imposters](https://en.wikipedia.org/wiki/Impostor_syndrome) when it comes to software development. In fact, as a statistician, it was a surprise to me when I was recently called a developer. In terms of  formal computer science training, I took one subject in first year, the appropriately initialised *OOF*. I am almost always befuddled by regexes on the rare occasions I come across them.
 
