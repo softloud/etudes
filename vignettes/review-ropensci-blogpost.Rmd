@@ -15,8 +15,10 @@ library(magrittr)
 To give you an idea of where I am in my `R` developer germination, I'd just started reading about [testing](http://r-pkgs.had.co.nz/tests.html) when I received an email from @rOpenSci inviting me to review a package for them. 
 
 Many of us in the `R` community feel like [imposters](https://en.wikipedia.org/wiki/Impostor_syndrome) when it comes to software development. In fact, as a statistician, it was a surprise to me when I was recently called a developer. In terms of  formal computer science training, I took one subject in first year, the appropriately initialised *OOF*. I am almost always befuddled by regexes on the rare occasions I come across them.
- 
+
 However, through undertaking this review, which began with the revelation that I'm not alone in thinking, ["What if I have absolutely nothing to say other than, yes, this is, in fact a package?!"](https://ropensci.org/blog/2017/08/22/first-package-review/), I have come to see that all `R` users are `R` family (aw). No doubt these are well worn cobblestones that I judder my bicycle along. Despite this, it felt like a unqiue journey given my current fascination with testing. 
+
+Now I think any `R` user can be a reviewer. That is, surely there's something to be said for having someone who's relatively unitiated take your package for a whirl, at the very least. We all want our packages to be usable by all data science folk, not just advanced programmers. 
 
 I was delighted that the [`testthat`](https://cran.r-project.org/web/packages/testthat/README.html) package was part of the recommended reviewer workflow, as well as novel [`devtools`](https://github.com/hadley/devtools) functions. Reading the [rOpenSci package guide](https://github.com/ropensci/onboarding/blob/master/packaging_guide.md) was a veritible font of good tips for someone who has only just begun building their first packages. 
 
