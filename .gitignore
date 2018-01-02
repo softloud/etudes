@@ -3,4 +3,4 @@
 .RData
 .Ruserdata
 inst/doc
-/vignettes/review-ropensci-brainstorming.Rmd
+vignettes/review-ropensci-brainstorming
