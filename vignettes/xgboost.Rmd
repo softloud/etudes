@@ -1,0 +1,16 @@
+---
+title: "`xgboost`"
+author: "Trouble"
+date: "08/01/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# `xgboost` package
+
+- The `xgboost`package provides *extreme gradient boosting*.
+- Variation on gradient boosted models.
+- 

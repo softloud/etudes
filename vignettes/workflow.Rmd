@@ -1,0 +1,71 @@
+---
+title: "GitHub-integrated Data Analytics Workflow"
+subtitle: "What analytics can learn from the dev community"
+author: "Charles T. Gray"
+date: "Friday 18 January"
+output: 
+  xaringan::moon_reader
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+---
+class: inverse, center, middle
+# Introduction
+
+# What my scripts looked like before
+
+---
+# What they look like now
+
+---
+# Why did I become obsessed?
+
+- Fully documented
+- Reproducible
+- Passes the Tram Test
+
+---
+# In a nutshell
+
+- GitHub repository (think Dropbox)
+- Analyses as package
+
+---
+class: inverse, center, middle
+# Analyses as packages
+
+
+---
+# Why package your analysis?
+
+- Full documentation of functions and datasets
+- Visualisations saved as plot objects that can be called into any document
+
+
+---
+# And there's more
+
+- Data manipulation becomes efficient and easy
+- All files accessible 
+- Project management
+
+---
+# The No Free Lunch Theorem
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">ok now listen, the harsh truth is you&#39;re better off writing one thick, messy .Rmd where you keep all your garbage models and weird musings then going off on some precious folder structure and  artfully-named .R files where you can&#39;t find a damned thing ever. <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/oldman?src=hash&amp;ref_src=twsrc%5Etfw">#oldman</a></p>&mdash; Andrew MacDonald (@polesasunder) <a href="https://twitter.com/polesasunder/status/953624238266646529?ref_src=twsrc%5Etfw">January 17, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+---
+# Resources
+
+- `R` packages
+- `tidyverse`: the dialect of `R` for data science
+- This presentation was made with the `xaringan` package
+
+---
+# Thank you for listening 
+

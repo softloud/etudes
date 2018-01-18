@@ -1,0 +1,58 @@
+---
+title: "NPS Project Overview"
+author: "Charles maintains this page."
+date: "Updated: `r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objective
+
+> What are the key drivers of NPS?
+
+What can we learn from data that has already been collected? 
+
+We want to aggregate the data associated with NPS that has been collected across NAB in different projects and build some exploratory models to understand key (and actionable) features.
+
+## Bringing it all together
+
+> What do we need to aggregate?
+
+- Roy Morgan's survey data: demographics, various measures. Most importantly, we will calculate the target measure **NPS** from these data.
+- Jordan Thomas and Tian Li have done a great deal of work using an NLP (Natural Language Processing) machine on text and sentiment analysis. These data are customer-identified, so we can join their data to ours on a customer level. 
+- Shepit is working on an algorithm to help us with identifying feature clusters associated with promoters and detractors. 
+
+## Current blockers 
+
+- Extracting the data from Roy Morgan's database. We will be able to progress this further at the training session next week. 
+- Shepit, Charles, and Paul are still working on the rollout of a GitHub-integrated analytics workflow.
+
+## Action items
+
+- Charles to set up a repository for this (where subprojects will be tracked in future).
+- Charles to port across this documentation to the repo.
+
+## Key people 
+
+Name|Affiliation|Role in this project
+-|-|-
+Nick|PwC|Project lead
+Wayne|NAB|Project contact at NAB
+Matt|PwC|Analyst, expert in control theory model
+Charles|PwC|Analyst and data monkey
+Jordan|NAB|Has performed NLP analysis on NPS data
+Erin|NAB|Liaison with Roy Morgan
+Ibrahim|Roy Morgan|Asteroid training
+
+## Glossary
+
+Term|Description
+-|-
+NPS|Net Promoter Score
+Asteroid|Roy Morgan's database
