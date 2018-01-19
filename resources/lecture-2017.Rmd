@@ -1,0 +1,266 @@
+---
+title: "Masterclass Series"
+subtitle: "Medical Statistics"
+author: "Charles T. Gray"
+date: "Tuesday 25 September 2017"
+output: 
+  ioslides_presentation:
+    incremental: true
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+library(metafor)
+library(tidyverse)
+library(shiny)
+library(dontpanic)
+```
+
+# Introduction
+
+## Who am I?
+
+```{r tram, fig.align='center'}
+knitr::include_graphics("pics/tram.jpg")
+```
+
+- [Mathbassador](http://choosemaths.org.au/charles-gray/) for Australian Mathematical Sciences Institute.
+- Research: bioinformatics, statistics, mathematics, data science, visualisation.
+- Lecturer in mathematics and statistics.
+- PhD in meta-analysis.
+- Council member, Statistical Society of Australia.
+
+## Interpreting research statistics
+
+Our topic focuses on two areas of medical statistics.
+
+- **Testing treatments**
+- e.g., systematic review.
+- **New methods** 
+- e.g., coverage probability simulations.
+- **Confidence intervals**
+
+# Confidence intervals
+
+## Why confidence intervals?
+
+- Like $p$-value, but *better*.
+- A $p$-value can be thought of as a measure of **surprise** of observing this value (or something more extreme). 
+- But CI combines **point estimate** with **uncertainty** in that estimate.
+- In current practice both are often reported.
+
+## Sampling distribution
+
+*Get the maths out of the way.*
+
+- Let $X_1, \dots, X_n$ be a simple random sample from a population of size $N$ with population mean $\mu$ and variance $\sigma^2$. 
+
+- If $n$ is large and the sampling fraction $\frac n N$ is small,
+\[
+\overline X \dot\sim N(\mu, \sigma^2_{\overline X}),
+\]
+where $\overline X$ is the mean of the $X_i$s and $\sigma^2_{\overline X}$ denotes the variance of $\overline X$.
+
+## Confidence intervals
+
+Let $\theta$ be the effect of interest and $\widehat\theta$ denote an estimator of this parameter. 
+Let $\sigma_\theta$ denote an estimator of the standard error of $\theta$.
+
+Then, the $(1 - \alpha) \times 100$% confidence interval is given by
+\[
+\widehat{\theta} \pm \Phi^{-1}(1 - \alpha / 2)\widehat{\sigma_\theta}
+\]
+where $\Phi^{-1}$ denotes the standard normal quantile function.
+
+## CI of sample mean
+
+- Recall $\overline X \dot\sim N(\mu, \sigma^2_{\overline X})$.
+- We use $\overline X$ to estimate $\mu$ and $s / \sqrt n$ to estimate $\sigma_{\overline X}$, where $s$ is the sample standard deviation.
+- Then a 95% confidence interval is given by 
+\[
+\overline X \pm \Phi^{-1}(0.975)\frac s {\sqrt n}
+\]
+
+## Visualising CIs
+
+```{r ci plot}
+tibble(
+  x = c(-3, 3)
+) %>% 
+  ggplot(aes(x = x)) +
+  stat_function(fun = dnorm, 
+                geom = "area",
+                xlim = qnorm(c(0.025, 0.975)),
+                fill = "lightblue") +
+  stat_function(fun = dnorm,
+                colour = "darkblue") +
+  geom_vline(xintercept = qnorm(c(0.025, 0.975)), 
+             linetype = "dotted") +
+  labs(x = "Quantile", y = "Density")
+```
+
+
+## *You're the statistician*
+
+An in-real-life coverage probability simulation.
+
+We will caclculate a 75% confidence interval
+\[
+\overline x \pm \Phi^{-1}(1 - 0.25 / 2)s/\sqrt n
+\]
+with $\Phi^{-1}(1 - 0.25 / 2) =$ `r round(qnorm(1 - 0.25/2), 2)`.
+
+
+
+## Varying $n$ and $N$
+
+```{r shiny}
+true_mean <- 5
+
+shinyApp(
+  ui = shinyUI(fluidPage(
+    titlePanel("You're the statistician: simulation"),
+    sidebarLayout(
+      sidebarPanel(
+        
+        sliderInput(inputId = "n",
+                    label = "sample size",
+                    min = 3,
+                    max = 1000,
+                    value = 3),
+        sliderInput(inputId = "N",
+                    label = "trials",
+                    min = 3,
+                    max = 1000,
+                    value = 3),
+        sliderInput(inputId = "alpha",
+                    label = "alpha",
+                    min = 0.0001,
+                    max = 0.95,
+                    value = 0.05)
+      ),
+      mainPanel(
+        textOutput("ratio"),
+        textOutput("prop"),
+        plotOutput("hist")# ,
+        # dataTableOutput("table")
+      )
+    )
+  )),
+  server = shinyServer(function(input, output){
+    ci_df <- reactive({
+      tibble(
+        n = rep(input$n, input$N),
+        sample = map(n, get_sample, dist = "norm", par = list(mean = true_mean, sd = 1)),
+        mean = map_dbl(sample, mean),
+        sd = map_dbl(sample, sd),
+        ci_lb = mean - qnorm(1 - input$alpha / 2) * sd / sqrt(n),
+        ci_ub = mean + qnorm(1 - input$alpha / 2) * sd / sqrt(n),
+        in_ci = true_mean > ci_lb & true_mean < ci_ub
+      )
+    }) 
+    
+    # Ratio.
+    output$ratio <- renderText({
+      ratio <- round((input$n / input$N), 2) 
+      paste("The ratio of the sample sizes divided by number of trials:", ratio) 
+      
+    })
+    
+    
+    # Proportion.
+    output$prop <- renderText({
+      paste(
+        "The proportion of confidence intervals that contain the true mean:",
+        round(sum(ci_df()$in_ci) / nrow(ci_df()), 2)
+      )
+    })
+    
+    output$hist <- renderPlot({
+      ci_df() %>% 
+        ggplot(aes(x = mean)) +
+        geom_histogram()
+    })
+    
+    output$table <- renderDataTable({ci_df() %>% select(-sample)})
+    
+  })
+)
+
+
+
+```
+
+
+# Meta-analysis
+
+## Measure of effect
+
+NB: $\theta$ can be all sorts of things!
+
+- A single population mean.
+- Mean difference $\mu_1 - \mu_2$
+- Standardised mean difference $(\mu_1 - \mu_2) / \sigma$
+- Odds ratio
+- Risk ratio
+- Log-ratio of means
+- Log-ratio of medians
+
+In meta-analysis, we are often interested in comparing two groups.
+
+## Why meta-analysis?
+
+- *Baby and Child Care* by Spock advised sleeping babies on stomach.
+- Best-seller from 1950s to 1990s.
+- More than 100,000 babies died of sudden infant death syndrome.
+- In early 90s, systematic review showed that SIDS decreased by 50% when on back.
+
+## Forest plots and CIs
+
+```{r forest}
+dat.normand1999 %>% 
+  escalc(measure = "SMD",
+         n1i = n1i,
+         m1i = m1i,
+         sd1i = sd1i,
+         n2i = n2i,
+         m2i = m2i,
+         sd2i = sd2i,
+         data = .) %>% 
+  rma(slab = source,
+      data = .,
+      yi = yi,
+      vi = vi) %>% 
+  forest()
+
+```
+
+NB: Watch out for measure of interest! 
+
+# New methods 
+
+## No free lunch threom
+
+[There is no algorithm that works on every problem.](https://ti.arc.nasa.gov/m/profile/dhw/papers/78.pdf)
+
+## Coverage probability simulations
+
+Suppose researchers wanted to know if a method works.
+
+1. Randomly sample control and treatment groups.
+2. Calculate sample mean and sample variance.
+3. Construct confidence interval.
+4. Is true value in there?
+
+Repeat for some number of trials. Calculate proportion.
+
+*NB: we did this together earlier!*
+
+## Interpreting simulation results
+
+```{r cp, out.width="750px"}
+knitr::include_graphics("pics/om_cov.png")
+```
+
+# Thank you
