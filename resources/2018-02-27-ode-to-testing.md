@@ -1,20 +1,25 @@
 ---
-slug: "an-ode-to-testing"
-title: "An Ode to Testing: my first review"
-package_version: 
-author: "Charles T. Gray"
-url: http://choosemaths.org.au/charles-gray/
-date: "27/01/2018"
-output: html_document
+slug: "ode-to-testing"
+title: An Ode to Testing: my first review
+package_version: 0.2.2.9000
+authors:
+  - name: Charles T. Gray
+    url: https://github.com/softloud
+date: 2018-02-27
+categories: blog
+topicid: 
+tags:
+  - r
+  - beginner
+  - community
+  - software
+  - review
+  - package
+  - data-access
+  - weathercan
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(magrittr)
-```
-
-To give you an idea of where I am in my `R` developer germination, I'd just started reading about [testing](http://r-pkgs.had.co.nz/tests.html) when I received an email from @rOpenSci inviting me to review the [`weathercan`](http://steffilazerte.github.io/weathercan/) package for them. 
-
+To give you an idea of where I am in my `R` developer germination, I'd just started reading about [testing](http://r-pkgs.had.co.nz/tests.html) when I received an email from @rOpenSci inviting me to review the [`weathercan`](http://steffilazerte.github.io/weathercan/) package. 
 Many of us in the `R` community feel like [imposters](https://en.wikipedia.org/wiki/Impostor_syndrome) when it comes to software development. In fact, as a statistician, it was a surprise to me when I was recently called a developer. In terms of  formal computer science training, I took one subject in first year, the appropriately initialised *OOF*. I am almost always befuddled by regexes on the rare occasions I come across them.
 
 However, through undertaking this review, which began with the revelation that I'm not alone in thinking, ["What if I have absolutely nothing to say other than, yes, this is, in fact a package?!"](https://ropensci.org/blog/2017/08/22/first-package-review/), I have come to see that all `R` users are `R` family (aw). No doubt these are well worn cobblestones that I judder my bicycle along. Despite this, it felt like a unique journey given my current fascination with testing. 
@@ -54,8 +59,7 @@ A wise man ([@njtierney](https://github.com/njtierney)) recently said to me that
 ```{r theory of everything, fig.align='center', echo = FALSE}
 
 ```
-
 <iframe src="https://open.spotify.com/embed/track/1Wd7EwZcoAfCAEi9FF6G6b" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 
 Not only do I know where everything is, but I can also trust that the functions work the way I intended in the documentation using testing. No longer will Current Charles be cursing Past Charles for her inscrutable code!
-
+  

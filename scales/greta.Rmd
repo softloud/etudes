@@ -1,0 +1,56 @@
+---
+title: "What's all this Bayesian whatnot, anyway?"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objective
+
+I want to explore the fundamental ideas of Bayesian statistics theoretically through Wasserman's *All of Statistics*, whilst also writing simulations and trying out various computational methods.Possibly most important of these will be `greta`. 
+
+## Tasks
+
+- Start at the start
+
+## Start at the start
+
+Wasserman begins his discussion of Bayesian inference thus. 
+
+*** 
+
+Bayesian inference is usually carried out in the following way. 
+
+1. We choose a probability density $f(θ)$ — called the *prior* distribution — that expresses our beliefs about a parameter $θ$ before we see any data.
+2. We choose a *statistical model* $f(x|θ)$ that reflects our beliefs about $x$ given $θ$. Notice that we now write this as $f(x|θ)$ instead of $f(x; θ)$.
+3. After observing data $X_1,...,X_n$, we update our beliefs and calculate the *posterior* distribution $f(θ|X_1,...,X_n)$.
+
+***
+
+> How to unpack these ideas? Try discrete and continuous, one, two, and m, parameters. Discrete has logical and multi-level. Approach multi-level discrete after doing logical discrete and continuous. There's also ordinal. This could eventually extend into a seperate docuemnt, if it gets away from me. And then there's the influence of moderators. 
+
+This is a process of inference. So, there is some population parameter $\theta$ of interest, and some sample of data from which we want to infer information about the unknown paramaeter $\theta$. Using properties of joint probability we can extend this idea to multiple parameters of interest.
+
+### Logical
+
+#### A scenario
+
+As always, I attempt to simplify as much as possible. Let's consider the case of one logical variable influencing another. 
+
+We shall consider 
+
+
+
+### Continuous
+
+### MUlti-level categorical
+
+### Ordinal
+
+## Ideas for data
+
+### Simulated
+
+### Applied
