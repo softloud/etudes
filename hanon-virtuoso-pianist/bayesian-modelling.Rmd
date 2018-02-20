@@ -1,0 +1,93 @@
+---
+title: "What's all this Bayesian whatnot, anyway?"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objective
+
+I want to explore the fundamental ideas of Bayesian statistics theoretically through Wasserman's *All of Statistics*, whilst also writing simulations and trying out various computational methods.Possibly most important of these will be `greta`. 
+
+## Packages
+
+```{r Load packages, message=FALSE}
+library(tidyverse)
+
+
+```
+
+## Tasks
+
+- Start at the start
+- Understand nonres problem, but need to decypher the problem before pushing it.
+- Don't forget to build classical frequentist models alongside the Bayesian and machine learning algorithms. 
+
+## Start at the start
+
+Wasserman begins his discussion of Bayesian inference thus. 
+
+*** 
+
+Bayesian inference is usually carried out in the following way. 
+
+1. We choose a probability density $f(θ)$ — called the *prior* distribution — that expresses our beliefs about a parameter $θ$ before we see any data.
+2. We choose a *statistical model* $f(x|θ)$ that reflects our beliefs about $x$ given $θ$. Notice that we now write this as $f(x|θ)$ instead of $f(x; θ)$.
+3. After observing data $X_1,...,X_n$, we update our beliefs and calculate the *posterior* distribution $f(θ|X_1,...,X_n)$.
+
+***
+
+> How to unpack these ideas? Try discrete and continuous, one, two, and m, parameters. Discrete has logical and multi-level. Approach multi-level discrete after doing logical discrete and continuous. There's also ordinal. This could eventually extend into a seperate docuemnt, if it gets away from me. And then there's the influence of moderators. 
+
+***
+
+This is a process of inference. So, there is some population parameter $\theta$ of interest, and some sample of data from which we want to infer information about the unknown paramaeter $\theta$. Using properties of joint probability we can extend this idea to multiple parameters of interest.
+
+***
+
+In a frequentist setting, we might say the random variable $X$ is i.i.d., so $X_i \sim N(\mu, \sigma^2)$ for some simple random sample $X_1, X_2, \dots, X_n$. We would assume that the key parameters $\mu$ and $\sigma$ are fixed.
+
+In a Bayesian setting, *everything* is a map, both random variables and parameters. I suppose I could consider the frequentist setting the special case where the parameters have fixed-value maps. 
+
+## An example scenario
+
+Misclassification problem - NB must rename variables in this before pushing it. 
+
+Suppose we have some peeps and they are given the option of eating canteloupe. The question is, does canteloupe eating enable us to classify the peep as a kittykitty or a humanslave?
+
+```{r Names of peeps}
+names <- c("dr x", "pandagrrRl", "patches", "beanie", "euclid")
+```
+
+and they have been classified (we will randomly assign classfication) as `humanslave` or `kittykitty`.
+
+```{r Simulate misclassication}
+kitty_class <- tibble(
+  names,
+  classification = sample(c("kittykitty", "humanslave"), length(names), replace = T))
+
+# Take a look.
+kitty_class %>% knitr::kable()
+
+```
+
+Now, we have a known and measurable variable, whether or not that person eats the canteloupe. 
+
+```{r Canteloupe}
+kitty_class <- kitty_class %>% 
+  mutate(canteloupe = c(F, T, T, F, F))
+
+# Take a look.
+kitty_class %>% 
+  knitr::kable()
+```
+
+The question is, can we use canteloupe as a classifer for `kittykitty`ness?
+
+> I suppose I could use a different classifier to experiment with when it is truly associated or not. In this case, there is no association. 
+
+## A simple logistic regression model
+
+

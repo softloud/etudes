@@ -126,10 +126,16 @@ $(document).ready(function () {
 <h2>Objective</h2>
 <p>I want to explore the fundamental ideas of Bayesian statistics theoretically through Wasserman’s <em>All of Statistics</em>, whilst also writing simulations and trying out various computational methods.Possibly most important of these will be <code>greta</code>.</p>
 </div>
+<div id="packages" class="section level2">
+<h2>Packages</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+</div>
 <div id="tasks" class="section level2">
 <h2>Tasks</h2>
 <ul>
 <li>Start at the start</li>
+<li>Understand nonres problem, but need to decypher the problem before pushing it.</li>
+<li>Don’t forget to build classical frequentist models alongside the Bayesian and machine learning algorithms.</li>
 </ul>
 </div>
 <div id="start-at-the-start" class="section level2">
@@ -146,33 +152,104 @@ $(document).ready(function () {
 <blockquote>
 <p>How to unpack these ideas? Try discrete and continuous, one, two, and m, parameters. Discrete has logical and multi-level. Approach multi-level discrete after doing logical discrete and continuous. There’s also ordinal. This could eventually extend into a seperate docuemnt, if it gets away from me. And then there’s the influence of moderators.</p>
 </blockquote>
+<hr />
 <p>This is a process of inference. So, there is some population parameter <span class="math inline">\(\theta\)</span> of interest, and some sample of data from which we want to infer information about the unknown paramaeter <span class="math inline">\(\theta\)</span>. Using properties of joint probability we can extend this idea to multiple parameters of interest.</p>
-<div id="logical" class="section level3">
-<h3>Logical</h3>
-<div id="a-scenario" class="section level4">
-<h4>A scenario</h4>
-<p>As always, I attempt to simplify as much as possible. Let’s consider the case of one logical variable influencing another.</p>
-<p>We shall consider</p>
+<hr />
+<p>In a frequentist setting, we might say the random variable <span class="math inline">\(X\)</span> is i.i.d., so <span class="math inline">\(X_i \sim N(\mu, \sigma^2)\)</span> for some simple random sample <span class="math inline">\(X_1, X_2, \dots, X_n\)</span>. We would assume that the key parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are fixed.</p>
+<p>In a Bayesian setting, <em>everything</em> is a map, both random variables and parameters. I suppose I could consider the frequentist setting the special case where the parameters have fixed-value maps.</p>
 </div>
+<div id="an-example-scenario" class="section level2">
+<h2>An example scenario</h2>
+<p>Misclassification problem - NB must rename variables in this before pushing it.</p>
+<p>Suppose we have some peeps and they are given the option of eating canteloupe. The question is, does canteloupe eating enable us to classify the peep as a kittykitty or a humanslave?</p>
+<pre class="r"><code>names &lt;- c(&quot;dr x&quot;, &quot;pandagrrRl&quot;, &quot;patches&quot;, &quot;beanie&quot;, &quot;euclid&quot;)</code></pre>
+<p>and they have been classified (we will randomly assign classfication) as <code>humanslave</code> or <code>kittykitty</code>.</p>
+<pre class="r"><code>kitty_class &lt;- tibble(
+  names,
+  classification = sample(c(&quot;kittykitty&quot;, &quot;humanslave&quot;), length(names), replace = T))
+
+# Take a look.
+kitty_class %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">names</th>
+<th align="left">classification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">dr x</td>
+<td align="left">humanslave</td>
+</tr>
+<tr class="even">
+<td align="left">pandagrrRl</td>
+<td align="left">humanslave</td>
+</tr>
+<tr class="odd">
+<td align="left">patches</td>
+<td align="left">humanslave</td>
+</tr>
+<tr class="even">
+<td align="left">beanie</td>
+<td align="left">humanslave</td>
+</tr>
+<tr class="odd">
+<td align="left">euclid</td>
+<td align="left">humanslave</td>
+</tr>
+</tbody>
+</table>
+<p>Now, we have a known and measurable variable, whether or not that person eats the canteloupe.</p>
+<pre class="r"><code>kitty_class &lt;- kitty_class %&gt;% 
+  mutate(canteloupe = c(F, T, T, F, F))
+
+# Take a look.
+kitty_class %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">names</th>
+<th align="left">classification</th>
+<th align="left">canteloupe</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">dr x</td>
+<td align="left">humanslave</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">pandagrrRl</td>
+<td align="left">humanslave</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">patches</td>
+<td align="left">humanslave</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">beanie</td>
+<td align="left">humanslave</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">euclid</td>
+<td align="left">humanslave</td>
+<td align="left">FALSE</td>
+</tr>
+</tbody>
+</table>
+<p>The question is, can we use canteloupe as a classifer for <code>kittykitty</code>ness?</p>
+<blockquote>
+<p>I suppose I could use a different classifier to experiment with when it is truly associated or not. In this case, there is no association.</p>
+</blockquote>
 </div>
-<div id="continuous" class="section level3">
-<h3>Continuous</h3>
-</div>
-<div id="multi-level-categorical" class="section level3">
-<h3>MUlti-level categorical</h3>
-</div>
-<div id="ordinal" class="section level3">
-<h3>Ordinal</h3>
-</div>
-</div>
-<div id="ideas-for-data" class="section level2">
-<h2>Ideas for data</h2>
-<div id="simulated" class="section level3">
-<h3>Simulated</h3>
-</div>
-<div id="applied" class="section level3">
-<h3>Applied</h3>
-</div>
+<div id="a-simple-logistic-regression-model" class="section level2">
+<h2>A simple logistic regression model</h2>
 </div>
 
 
