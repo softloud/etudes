@@ -1,0 +1,82 @@
+---
+title: "Unpacking the basic example"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+
+```
+
+## Running through the introductory `greta` example
+
+This introductory example was found on the [front page](https://greta-dev.github.io/greta/) of the `greta` website.
+
+```{r }
+library(greta)
+
+x <- iris$Petal.Length
+y <- iris$Sepal.Length
+
+int <- normal(0, 5)
+coef <- normal(0, 3)
+sd <- lognormal(0, 3)
+
+mean <- int + coef * x
+distribution(y) <- normal(mean, sd)
+
+m <- model(int, coef, sd)
+
+# Throws error for chains argument, removed chains = 3 & reported issue on github. 
+draws <- greta::mcmc(m, n_samples = 1000) 
+
+bayesplot::mcmc_trace(draws)
+
+```
+
+## Now to unpack each element
+
+### First, as always, we start with data
+
+In this case, we're interested in if these data suggest there is an association between `Petal.Length` and `Sepal.Length` in the canonical `iris` dataset.
+
+```{r Get some data}
+library(greta)
+
+x <- iris$Petal.Length
+y <- iris$Sepal.Length
+
+```
+
+These are two continuous variables.
+
+```{r continuous, message=FALSE, warning=FALSE}
+
+library(tidyverse) # Sorry, Nick. 
+
+iris %>%
+  select(Sepal.Length, Petal.Length) %>% 
+  gather(key = "variable",
+         value = "Length") %>% 
+  ggplot(aes(Length)) +
+  geom_histogram() +
+  facet_wrap(~ variable)
+
+```
+
+This is a simple linear model, one that we used ordinary least squares to solve in undergrad. 
+
+So, for the $i$th observation, we have
+$$
+Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i
+$$
+where $\varepsilon_i \sim N(0, \sigma^2)$. Which is to say,
+$$
+E(Y) = \beta_0 + \beta_1 X.
+$$
+
+
+

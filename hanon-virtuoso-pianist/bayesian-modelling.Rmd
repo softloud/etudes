@@ -82,12 +82,41 @@ kitty_class <- kitty_class %>%
 # Take a look.
 kitty_class %>% 
   knitr::kable()
+
 ```
 
 The question is, can we use canteloupe as a classifer for `kittykitty`ness?
 
 > I suppose I could use a different classifier to experiment with when it is truly associated or not. In this case, there is no association. 
 
+> I also wonder if this can be extended to a multinomial allowing for more than one type of misclassification.
+
+```{r Add a misclassification tag}
+tibble(
+  names,
+  catriarchy = c("humanslave", "humanslave", rep("kittykitty", 3))
+) %>% 
+  right_join(kitty_class, by = "names") %>% 
+  mutate(misclassified = classification != catriarchy) -> kitty_class
+
+
+```
+
+
 ## A simple logistic regression model
 
+```{r logit}
+
+# Fit a glm
+kitty_logistic <- glm(misclassified ~ canteloupe, 
+                      data = kitty_class,
+                      family = "binomial")
+
+# Take a look at the results.
+kitty_logistic %>% broom::glance()
+
+kitty_logistic %>% broom::tidy()
+
+kitty_logistic %>% broom::augment()
+```
 
