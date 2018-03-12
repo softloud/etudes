@@ -1,0 +1,23 @@
+---
+title: "fix d.va"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objective
+
+Use code from blogpost - huh, well this doesn't seem to have an error in the Viewing pane in RStudio. But maybe there's something different about the blog? Maybe I don't have the markdown/html syntax.
+
+<center>
+<img src= "https://upload.wikimedia.org/wikipedia/en/5/55/D.Va_Overwatch.png" style = "width: 400px"
+alt = "D.Va portrait. https://upload.wikimedia.org/wikipedia/en/5/55/D.Va_Overwatch.png" >
+<br>
+<div style="font-size: 1em"> [Writing GitHub-integrated packaged analyses makes me feel like this. And, **yes**, I really do main D.Va.](https://en.wikipedia.org/wiki/D.Va)</div>
+</center>
+
