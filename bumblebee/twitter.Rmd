@@ -1,0 +1,127 @@
+---
+title: "twitter"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+I want to find some tweets where we discuss my visit to Stockholm. So, I wish to search my twitter feed for the character string `"Stockholm"`. 
+
+I haven't tried twitter scraping before, this seems as good as anywhere to start. 
+
+I searched for the terms "tidyverse", "twitter", "scrape" and found a [tutorial](https://idc9.github.io/stor390/notes/API/twitter/rtweet.html) about the `rtweet` package. Seems to be mentioned often enough and recently enough for it to be a good candidate. 
+
+Alrighty, let's begin.
+
+```{r Load packages}
+library(tidyverse)
+library(rtweet)
+library(rvest)
+
+```
+
+I'm not entirely sure what all this business of access tokens is for. I wonder if I need to set them just to scrape the public feed?
+
+```{r try timeline}
+# timeline <- get_timeline("cantabile") # This did not work.
+
+```
+
+## Getting access to twitter
+
+For this part, I was directed to [these instructions](http://rtweet.info/articles/auth.html). I was curious to find out if I was required to set this up just to access my feed; i.e., not write to it. I found I did need to set this up. 
+
+```{r create token}
+# App
+# appname <- "cantabilertweet"
+
+# api key stored in object 'key'
+# secret stored in object secret
+
+# twitter_token <- create_token(app = appname,
+#                               consumer_key = key,
+#                               consumer_secret = secret)
+
+```
+
+## Scraping twitter
+
+Okay, let's try this again.
+
+```{r trying again}
+cantabile_timeline <- get_timeline("cantabile", n = 3200)
+
+# Take a look.
+cantabile_timeline %>% str(max.level = 1)
+
+```
+
+## Find the string `"Stockholm"`.
+
+Let's make sure I understand how strings work. I may need to go to the `stringr` cheatsheet.
+
+```{r Testing out strings}
+
+stockholm_string <- "Stockholm is a very fine place."
+
+# This doesn't work.
+"Stockholm" %in% stockholm_string
+
+# What about this?
+"Stockholm" %in% str_split(stockholm_string, pattern = " ")
+
+# Curious.
+str_split(stockholm_string, pattern = " ")
+
+# Is it because of its class?
+str_split(stockholm_string, pattern = " ") %>% class()
+
+# Make it a character vector.
+stockholm_vector <- stockholm_string %>% str_split(pattern = " ")
+
+# Class of vector
+stockholm_vector %>% class()
+
+# Take a look.
+stockholm_vector
+
+# Try converting to character string.
+"Stockholm" %in% stockholm_vector[[1]]
+```
+
+## Extract my tweets that mention Stockholm
+
+```{r Filter to my tweets}
+my_tweets <- cantabile_timeline %>% 
+  filter(is_quote == FALSE, # Remove quotes.
+         is_retweet == FALSE # Remove retweets.
+         ) %>% 
+  mutate( # Tokenise text.
+    twit_vector = map(text, str_split, pattern = "\\s"),
+    twit_vector = tolower(twit_vector), # Convert words to lower case.
+    stockholm = map_lgl(twit_vector,
+                        .f = function(a_tweet) {
+                          "the" %in% a_tweet
+                        }) # See if Stockholm is there.
+         ) 
+
+# Take a look.
+my_tweets$twit_vector[[1]]
+
+
+# Testing that Stockholm produces what I want.
+my_tweets$stockholm %>% table()
+
+# %>% 
+#   filter(
+#     Stockholm == TRUE
+#   )
+
+
+```
+
+
+## Extract responses to those tweets
+

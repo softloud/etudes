@@ -119,11 +119,3 @@ delays %>%
 
 # How to vignette
 
-```{r}
-# browseVignettes("etudes")
-```
-
-```{sql }
-
-```
-

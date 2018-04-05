@@ -11,9 +11,20 @@ library(greta)
 
 ```
 
+## Tasks
+
+- Theory section
+- Create data
+- Generalised linear model with `glm`
+- Then try glm `greta`
+
 ## The glm model
 
 > misclassification = log(loan_value) + loan_age
+
+## A little theory
+
+
 
 ## Create some data
 
@@ -43,11 +54,6 @@ sim_df %>% head() %>% knitr::kable()
 ## The ol' fashioned way
 
 ```{r glm}
-sim_glm <- glm(
-  misclassified ~ loan_value + loan_life,
-  data = sim_df,
-  family = binomial
-)
 
 ```
 

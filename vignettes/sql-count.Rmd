@@ -1,0 +1,60 @@
+---
+title: "sql count"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load packages, warnings=FALSE}
+library(tidyverse)
+
+
+```
+
+
+## Need to do a count, many to many
+
+```{r dummy dataset}
+# Create a dummy dataset.
+n <- 6 # Set number of observations
+
+dd <- tibble(
+  species = sample(c("cat", "dog", "pig"), n, replace = T),
+  number = sample(seq(1:4), n, replace = T),
+  letter = sample(letters[1:2], n, replace = T)
+)
+
+# Take a look.
+dd %>% head() %>% knitr::kable()
+
+```
+
+## Now to count how many for each
+
+```{r count using table}
+dd %>% 
+  group_by(letter, species) %>% 
+  count()
+      
+```
+
+```{r}
+# For one count
+dd %>% 
+  group_by(letter) %>% 
+  count()
+
+```
+
+```{r}
+# For one count
+dd %>% 
+  count(letter) %>% 
+  show_query()
+
+
+
+```
+
