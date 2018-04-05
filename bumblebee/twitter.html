@@ -150,6 +150,7 @@ library(rvest)</code></pre>
 <pre class="r"><code># timeline &lt;- get_timeline(&quot;cantabile&quot;) # This did not work.</code></pre>
 <div id="getting-access-to-twitter" class="section level2">
 <h2>Getting access to twitter</h2>
+<p>For this part, I was directed to <a href="http://rtweet.info/articles/auth.html">these instructions</a>. I was curious to find out if I was required to set this up just to access my feed; i.e., not write to it. I found I did need to set this up.</p>
 <pre class="r"><code># App
 # appname &lt;- &quot;cantabilertweet&quot;
 
@@ -163,60 +164,117 @@ library(rvest)</code></pre>
 <div id="scraping-twitter" class="section level2">
 <h2>Scraping twitter</h2>
 <p>Okay, let’s try this again.</p>
-<pre class="r"><code>timeline &lt;- get_timeline(&quot;cantabile&quot;, n = 3200)
+<pre class="r"><code>cantabile_timeline &lt;- get_timeline(&quot;cantabile&quot;, n = 3200)
 
 # Take a look.
-timeline %&gt;% str(max.level = 1)</code></pre>
-<pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    3228 obs. of  42 variables:
-##  $ status_id             : chr  &quot;981752149376774144&quot; &quot;981732293046759425&quot; &quot;981674026924822528&quot; &quot;981672704045531136&quot; ...
-##  $ created_at            : POSIXct, format: &quot;2018-04-05 04:35:27&quot; &quot;2018-04-05 03:16:33&quot; ...
+cantabile_timeline %&gt;% str(max.level = 1)</code></pre>
+<pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    3232 obs. of  42 variables:
+##  $ status_id             : chr  &quot;981772018537316352&quot; &quot;981770776494817281&quot; &quot;981762358673530880&quot; &quot;981760210820722688&quot; ...
+##  $ created_at            : POSIXct, format: &quot;2018-04-05 05:54:24&quot; &quot;2018-04-05 05:49:28&quot; ...
 ##  $ user_id               : chr  &quot;11963792&quot; &quot;11963792&quot; &quot;11963792&quot; &quot;11963792&quot; ...
 ##  $ screen_name           : chr  &quot;cantabile&quot; &quot;cantabile&quot; &quot;cantabile&quot; &quot;cantabile&quot; ...
-##  $ text                  : chr  &quot;Not sure if using this package will save me time or take me down a rabbit hole of the red pill and then I'm jus&quot;| __truncated__ &quot;RT @thomas_mock: #TidyTuesday is in full swing and there are already some great plots and code!\n\nMake sure an&quot;| __truncated__ &quot;@mdneuzerling I keep switching based on what's at hand. Right now I'm using a Moleskine with a tear off Rhodia &quot;| __truncated__ &quot;@mdneuzerling Yup, that's why I went back. My last and favourite, I think, was a grey Clairefontaine.&quot; ...
+##  $ text                  : chr  &quot;And once again I am foiled by my nemesis Regex the Undefeated, often accompanied by Invader Vim (nowhere near a&quot;| __truncated__ &quot;Ah and once again we find ourselves back here. At least I have a cheatsheet this time. https://t.co/irml2xT1jK&quot; &quot;@rensa_co @Lifeline_ACT @ianirvineauthor @FIRECATz I should give it another try. I lost the thread not that far&quot;| __truncated__ &quot;@rensa_co @Lifeline_ACT @ianirvineauthor @FIRECATz So, Obernewtyn series - thoughts now that it's finally done?&quot; ...
 ##  $ source                : chr  &quot;Twitter Web Client&quot; &quot;Twitter Web Client&quot; &quot;Twitter Web Client&quot; &quot;Twitter Web Client&quot; ...
-##  $ reply_to_status_id    : chr  NA NA &quot;981673160918482944&quot; &quot;981671644748918784&quot; ...
-##  $ reply_to_user_id      : chr  NA NA &quot;3146735425&quot; &quot;3146735425&quot; ...
-##  $ reply_to_screen_name  : chr  NA NA &quot;mdneuzerling&quot; &quot;mdneuzerling&quot; ...
+##  $ reply_to_status_id    : chr  &quot;981770776494817281&quot; NA &quot;981761200026353665&quot; &quot;981756574640173056&quot; ...
+##  $ reply_to_user_id      : chr  &quot;11963792&quot; NA &quot;29916355&quot; &quot;29916355&quot; ...
+##  $ reply_to_screen_name  : chr  &quot;cantabile&quot; NA &quot;rensa_co&quot; &quot;rensa_co&quot; ...
 ##  $ is_quote              : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-##  $ is_retweet            : logi  FALSE TRUE FALSE FALSE FALSE FALSE ...
-##  $ favorite_count        : int  0 0 0 1 7 3 0 0 1 8 ...
-##  $ retweet_count         : int  0 7 0 0 0 0 1 1 0 0 ...
-##  $ hashtags              :List of 3228
-##  $ symbols               :List of 3228
-##  $ urls_url              :List of 3228
-##  $ urls_t.co             :List of 3228
-##  $ urls_expanded_url     :List of 3228
-##  $ media_url             :List of 3228
-##  $ media_t.co            :List of 3228
-##  $ media_expanded_url    :List of 3228
-##  $ media_type            :List of 3228
-##  $ ext_media_url         :List of 3228
-##  $ ext_media_t.co        :List of 3228
-##  $ ext_media_expanded_url:List of 3228
+##  $ is_retweet            : logi  FALSE FALSE FALSE FALSE FALSE TRUE ...
+##  $ favorite_count        : int  0 2 1 0 0 0 0 1 7 3 ...
+##  $ retweet_count         : int  0 0 0 0 0 7 0 0 0 0 ...
+##  $ hashtags              :List of 3232
+##  $ symbols               :List of 3232
+##  $ urls_url              :List of 3232
+##  $ urls_t.co             :List of 3232
+##  $ urls_expanded_url     :List of 3232
+##  $ media_url             :List of 3232
+##  $ media_t.co            :List of 3232
+##  $ media_expanded_url    :List of 3232
+##  $ media_type            :List of 3232
+##  $ ext_media_url         :List of 3232
+##  $ ext_media_t.co        :List of 3232
+##  $ ext_media_expanded_url:List of 3232
 ##  $ ext_media_type        : logi  NA NA NA NA NA NA ...
-##  $ mentions_user_id      :List of 3228
-##  $ mentions_screen_name  :List of 3228
+##  $ mentions_user_id      :List of 3232
+##  $ mentions_screen_name  :List of 3232
 ##  $ lang                  : chr  &quot;en&quot; &quot;en&quot; &quot;en&quot; &quot;en&quot; ...
 ##  $ quoted_status_id      : chr  NA NA NA NA ...
 ##  $ quoted_text           : chr  NA NA NA NA ...
-##  $ retweet_status_id     : chr  NA &quot;981223763906891777&quot; NA NA ...
-##  $ retweet_text          : chr  NA &quot;#TidyTuesday is in full swing and there are already some great plots and code!\n\nMake sure and participate, us&quot;| __truncated__ NA NA ...
+##  $ retweet_status_id     : chr  NA NA NA NA ...
+##  $ retweet_text          : chr  NA NA NA NA ...
 ##  $ place_url             : chr  NA NA NA NA ...
 ##  $ place_name            : chr  NA NA NA NA ...
 ##  $ place_full_name       : chr  NA NA NA NA ...
 ##  $ place_type            : chr  NA NA NA NA ...
 ##  $ country               : chr  NA NA NA NA ...
 ##  $ country_code          : chr  NA NA NA NA ...
-##  $ geo_coords            :List of 3228
-##  $ coords_coords         :List of 3228
-##  $ bbox_coords           :List of 3228
+##  $ geo_coords            :List of 3232
+##  $ coords_coords         :List of 3232
+##  $ bbox_coords           :List of 3232
 ##  - attr(*, &quot;users&quot;)=Classes 'tbl_df', 'tbl' and 'data.frame':    1 obs. of  20 variables:</code></pre>
 </div>
 <div id="find-the-string-stockholm." class="section level2">
 <h2>Find the string <code>&quot;Stockholm&quot;</code>.</h2>
 <p>Let’s make sure I understand how strings work. I may need to go to the <code>stringr</code> cheatsheet.</p>
-<pre class="r"><code>&quot;Stockholm&quot; %in% &quot;Stockholm is a very fine place.&quot;</code></pre>
+<pre class="r"><code>stockholm_string &lt;- &quot;Stockholm is a very fine place.&quot;
+
+# This doesn't work.
+&quot;Stockholm&quot; %in% stockholm_string</code></pre>
 <pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code># What about this?
+&quot;Stockholm&quot; %in% str_split(stockholm_string, pattern = &quot; &quot;)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code># Curious.
+str_split(stockholm_string, pattern = &quot; &quot;)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;Stockholm&quot; &quot;is&quot;        &quot;a&quot;         &quot;very&quot;      &quot;fine&quot;      &quot;place.&quot;</code></pre>
+<pre class="r"><code># Is it because of its class?
+str_split(stockholm_string, pattern = &quot; &quot;) %&gt;% class()</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre class="r"><code># Make it a character vector.
+stockholm_vector &lt;- stockholm_string %&gt;% str_split(pattern = &quot; &quot;)
+
+# Class of vector
+stockholm_vector %&gt;% class()</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre class="r"><code># Take a look.
+stockholm_vector</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;Stockholm&quot; &quot;is&quot;        &quot;a&quot;         &quot;very&quot;      &quot;fine&quot;      &quot;place.&quot;</code></pre>
+<pre class="r"><code># Try converting to character string.
+&quot;Stockholm&quot; %in% stockholm_vector[[1]]</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="extract-my-tweets-that-mention-stockholm" class="section level2">
+<h2>Extract my tweets that mention Stockholm</h2>
+<pre class="r"><code>my_tweets &lt;- cantabile_timeline %&gt;% 
+  filter(is_quote == FALSE, # Remove quotes.
+         is_retweet == FALSE # Remove retweets.
+         ) %&gt;% 
+  mutate( # Tokenise text.
+    twit_vector = map(text, str_split, pattern = &quot;\\s&quot;),
+    twit_vector = tolower(twit_vector), # Convert words to lower case.
+    stockholm = map_lgl(twit_vector,
+                        .f = function(a_tweet) {
+                          &quot;the&quot; %in% a_tweet
+                        }) # See if Stockholm is there.
+         ) 
+
+# Take a look.
+my_tweets$twit_vector[[1]]</code></pre>
+<pre><code>## [1] &quot;list(c(\&quot;and\&quot;, \&quot;once\&quot;, \&quot;again\&quot;, \&quot;i\&quot;, \&quot;am\&quot;, \&quot;foiled\&quot;, \&quot;by\&quot;, \&quot;my\&quot;, \&quot;nemesis\&quot;, \&quot;regex\&quot;, \&quot;the\&quot;, \&quot;undefeated,\&quot;, \&quot;often\&quot;, \&quot;accompanied\&quot;, \&quot;by\&quot;, \&quot;invader\&quot;, \&quot;vim\&quot;, \&quot;(nowhere\&quot;, \&quot;near\&quot;, \&quot;as\&quot;, \&quot;fun\&quot;, \&quot;as\&quot;, \&quot;zim).\&quot;, \&quot;why\&quot;, \&quot;doesn't\&quot;, \&quot;str_split\&quot;, \&quot;like\&quot;, \&quot;finding\&quot;, \&quot;the\&quot;, \&quot;pattern\&quot;, \&quot;\\\&quot;\\\\\\\\s\\\&quot;?\&quot;))&quot;</code></pre>
+<pre class="r"><code># Testing that Stockholm produces what I want.
+my_tweets$stockholm %&gt;% table()</code></pre>
+<pre><code>## .
+## FALSE 
+##  1932</code></pre>
+<pre class="r"><code># %&gt;% 
+#   filter(
+#     Stockholm == TRUE
+#   )</code></pre>
+</div>
+<div id="extract-responses-to-those-tweets" class="section level2">
+<h2>Extract responses to those tweets</h2>
 </div>
 
 
