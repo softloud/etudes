@@ -13,14 +13,10 @@ Need to set up crediantial caching for git to talk to github. From [JC](http://h
 
 `git config --global credential.helper 'cache --timeout=10000000'`
 
+I got this working Wednesday May 9 in 2018, and I think I set it for about 32 weeks, so I will need to redo this step then. 
+
 ## Useful
 
 After I `git clone <repo url>`, I think I may have to use this command. 
 
 `git push -u origin master` 
-
-Testing pushing.
-
-Testing again.
-
-And again.
