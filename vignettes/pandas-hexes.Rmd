@@ -1,0 +1,129 @@
+---
+title: "Pandas hexes"
+author: "Charles T. Gray"
+date: "19 April 2018"
+output: 
+  html_document:
+    toc: true
+    toc_float: true    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Packages
+
+```{r Packages}
+library(tidyverse)
+
+```
+
+
+## The general idea
+
+I like to draw pandas using crude circles. I often draw them on postits and leave them around friends' workstations. 
+
+So, this could be a great way of me theming my own hexes. Also, I think they're plottable. 
+
+## The theory
+
+Let's suppose we have 
+
+## Plot the pandas
+
+### Shapes required
+
+I want to keep this minimal, so I'll stick with circles. Let's find a circle for:
+
+- the body; 
+- the head; 
+- the ears and tail; 
+- the paws;
+- the eyes. 
+
+Plot the text beside the circles, too. 
+
+Also, plot a test panda. 
+
+```{r Circles}
+# 5 circles of different sizes
+# Can I just do this with geom_point some kind of fill and outline aesthetic? 
+
+# Set distance between the points.
+node_distance <- 1
+
+biggest_size <- node_distance / 2
+
+number_of_nodes <- 5 # Can't change without modifying code for size. 
+
+(test <- tibble(
+  x = 1,
+  y = seq(1, number_of_nodes, by = node_distance),
+  size = c(biggest_size, 
+           biggest_size / 2, 
+           biggest_size / 3,
+           biggest_size / 4,
+           biggest_size / 8
+           ),
+  colour = c("black", rep("white", 4)))) 
+
+test %>% 
+  ggplot(
+    aes(x = x, y = y)
+  ) +
+  geom_point(aes(size = size,
+                 colour = colour),
+             shape = 21,
+             colour = "black",
+             fill = "white"
+             ) 
+
+
+```
+
+### Five pandas, one with a monocle
+
+There is a `data` argument in `geom_point`. I think I should specify the data with each layer.
+
+```{r Plot five pandas}
+# Node distance: 1.
+
+body_size <- 10
+
+tibble( # Specify the dimensions of the plot.
+  x = c(1, 5),
+  y = c(0.5, 1.5)
+) %>% 
+  ggplot(
+    aes(x = x, y = y)
+  ) + 
+  coord_cartesian(xlim = c(0, 6), ylim = c(0.8, 1.2)) + 
+    geom_point( # Body
+      data = tibble(x = seq(1, 5, by = 1),
+                           y = rep(0.96, 5)),
+             size = body_size / 2,
+             shape = 21,
+             colour = "black",
+             fill = "white") +
+ geom_point( # Head
+   data = tibble(x = seq(1, 5, by = 1),
+                         y = rep(1, 5)),
+            size = body_size,
+            shape = 21,
+            colour = "black",
+            fill = "white") +
+  geom_point( # Feet and hands.
+    data = tibble(
+      x = 
+    )
+    
+  )
+  
+
+
+```
+
+
+
+## Convert to hex

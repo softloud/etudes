@@ -1,0 +1,146 @@
+---
+title: "twitter"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+I want to find some tweets where we discuss my visit to Stockholm. So, I wish to search my twitter feed for the character string `"Stockholm"`. 
+
+I haven't tried twitter scraping before, this seems as good as anywhere to start. 
+
+I searched for the terms "tidyverse", "twitter", "scrape" and found a [tutorial](https://idc9.github.io/stor390/notes/API/twitter/rtweet.html) about the `rtweet` package. Seems to be mentioned often enough and recently enough for it to be a good candidate. 
+
+Alrighty, let's begin.
+
+```{r Load packages}
+library(tidyverse)
+library(rtweet)
+library(rvest) # Another possible package to investigate.
+
+```
+
+I'm not entirely sure what all this business of access tokens is for. I wonder if I need to set them just to scrape the public feed?
+
+```{r try timeline}
+# timeline <- get_timeline("cantabile") # This did not work.
+
+```
+
+## Getting access to twitter
+
+For this part, I was directed to [these instructions](http://rtweet.info/articles/auth.html). I was curious to find out if I was required to set this up just to access my feed; i.e., not write to it. I found I did need to set this up. 
+
+```{r create token}
+# App
+# appname <- "cantabilertweet"
+
+# api key stored in object 'key'
+# secret stored in object secret
+
+# twitter_token <- create_token(app = appname,
+#                               consumer_key = key,
+#                               consumer_secret = secret)
+
+```
+
+## Scraping twitter
+
+Okay, let's try this again.
+
+```{r trying again}
+cantabile_timeline <- get_timeline("cantabile", n = 3200)
+
+# Take a look.
+cantabile_timeline %>% str(max.level = 1)
+
+```
+
+## Find the string `"Stockholm"`
+
+Let's make sure I understand how strings work. I may need to go to the `stringr` cheatsheet.
+
+```{r Testing out strings}
+
+stockholm_string <- "Stockholm is a very fine place."
+
+# This doesn't work.
+"Stockholm" %in% stockholm_string
+
+# What about this?
+"Stockholm" %in% str_split(stockholm_string, pattern = " ")
+
+# Curious.
+str_split(stockholm_string, pattern = " ")
+
+# Is it because of its class?
+str_split(stockholm_string, pattern = " ") %>% class()
+
+# Make it a character vector.
+stockholm_vector <- stockholm_string %>% str_split(pattern = " ")
+
+# Class of vector
+stockholm_vector %>% class()
+
+# Take a look.
+stockholm_vector
+
+# Try converting to character string.
+"Stockholm" %in% stockholm_vector[[1]]
+```
+
+## Extract my tweets that mention Stockholm
+
+```{r Filter to my tweets}
+# I hope my interpretation of the variables in the tibble is correct.
+
+stockholm_tweets <- cantabile_timeline %>% 
+  filter(is_quote == FALSE, # Remove quotes.
+         is_retweet == FALSE, # Remove retweets.
+         is.na(reply_to_status_id), # Remove replies.
+         grepl("Stockholm", text) | grepl("stockholm", text)) # Only those that mention "Stockholm"
+
+# Take a look.
+stockholm_tweets$twit_vector[[1]]
+
+
+# Testing that Stockholm produces what I want.
+stockholm_tweets$stockholm %>% table()
+
+# So, why does this work?
+stockholm_tweets$text[[1]] %>% str_split(pattern = " ")
+
+# But not when I map over text?
+
+# Take a look.
+stockholm_tweets %>% 
+  select(created_at, text, status_id) %>% 
+  knitr::kable()
+
+```
+
+
+## Extract responses to those tweets
+
+```{r Try a join}
+# Or could just use a filter.
+tweets_replies <- cantabile_timeline %>% 
+  mutate( 
+    # See if tweet was a response to stockholm mentioning tweet.
+    reply_stockholm = reply_to_status_id %in% stockholm_tweets$status_id
+    ) %>%
+  filter(
+    # Get the replies.
+    reply_stockholm == TRUE
+  )
+
+cantabile_timeline %>% 
+  filter(reply_to_status_id == stockholm_tweets$status_id[[1]])
+
+
+```
+
+
+

@@ -1,0 +1,431 @@
+---
+title: "Awesome Your Data Science "
+subtitle: "What analytics can learn from the dev community"
+author: "Charles T. Gray (PwC @ NAB)"
+date: "Friday 23 January"
+output:
+  ioslides_presentation
+runtime: shiny
+---
+
+ 
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+# Let's start with you
+
+## Let's start with you
+
+### How would you describe your background?
+
+- actuarial only?
+- actuarial and?
+- something else?
+
+## A day in the life of
+
+### What do you do day to day?
+
+Do you do any (or all!) of the following?
+
+- import, scrape, and clean data
+- analyse data
+- model and visualise data
+- summarise and report on data
+- share knowledge about data
+- **communicate the story of the data**
+
+## What is data science?
+
+I like to think about it this way: 
+
+<center>
+If you finding and telling the *story* of the data, then you are practicing **data science**.
+</center>
+
+## A little about me
+
+- fun, "good" job
+- different path
+- ...last two years of research
+- evangelical `tidyvert`
+
+The **if you didn't study it in undergrad** rule.
+
+# Towering pillars of hats
+
+<center>
+![](https://wiki.teamfortress.com/w/images/f/f5/Towering_Pillar_of_Hats.png){width=20%}
+</center>
+
+## What my scripts looked like before
+
+```
+library(numDeriv)
+library(plyr)
+
+# S = sqrt(N)*delta (i.e. the non-central t-distributed effect sizes)
+# X = covariate vector
+# N = Study sample sizes
+
+sim <- F
+
+mr.mle.fixed <- function(S, X, N, method = "nlminb") {
+  p <- ncol(X) - 1
+  
+  K <- length(S)
+  
+  if (length(N) == 1)
+    N <- rep(N, K)
+  
+  objective <- function(par, S, X, N) {
+    b <- par
+    
+    - sum(log(dt(
+      S, df = N - 1, ncp = sqrt(N) * (X %*% b)
+    )))
+  }
+
+```
+
+ 
+
+## What they look like now
+
+ 
+
+### Load packages:
+
+```
+library(numDeriv)
+library(plyr)
+```
+
+### Define variables
+
+ 
+
+Variable|Definition
+-|-
+S| $\sqrt N \times \delta$ (i.e. the non-central $t$-distributed effect sizes)
+X| Covariate vector
+N| Study sample sizes
+
+
+## What they look like now
+
+### Calculate MLE
+
+```
+mr.mle.fixed <- function(S, X, N, method = "nlminb") {
+  p <- ncol(X) - 1
+  
+  K <- length(S)
+  
+  if (length(N) == 1)
+    N <- rep(N, K)
+
+  objective <- function(par, S, X, N) {
+    b <- par
+    
+    - sum(log(dt(
+      S, df = N - 1, ncp = sqrt(N) * (X %*% b)
+    )))
+    
+  }
+  
+```
+
+## Many more struggles
+
+Here are hurdles I ran into all the time:
+
+- forgetting where the correct script for a function is
+- and where is the latest, bestest, most up to date version of that function
+- constantly woryying if all script files that `source` that function source the most up to date version?
+
+*breathe*
+
+Finally, what on earth was past Charles thinking?
+
+Now my visualisation won't compile. 
+
+## Towering pillars of hats
+
+<center>
+![My script files were like this](https://wiki.teamfortress.com/w/images/f/f5/Towering_Pillar_of_Hats.png){width=20%, height=50%}
+</center>
+
+## Technology has outpaced education
+
+Many of study theory and how to display latex equations prettily. Let
+$$
+\widehat y_i = \beta_0 + \sum_{i = 1}^n \beta_i + \varepsilon_i
+$$
+where $\varepsilon_i \sim N(0, \sigma^2)$
+
+### And many of us miss out on
+
+- SQL
+- advanced `R`
+- visualisation
+- python
+
+## It doesn't need to be that hard
+
+Using tools from the software development community we can make our lives a whole lot easier.
+
+Specifically, two tools used together.
+
+- version control
+- package development
+
+# A GitHub-integrated data analytics workflow
+
+## Version control
+
+Saving a file automates
+
+- efficient file sharing (diffs)
+- version number assigned
+- records in the subproject in the project plan dates, user, and a description of what was done
+- an easy way to view the specific changes that were made
+
+## Package development
+
+- an intuitive file structure for your functions
+- tests that ensure your functions do what you intend them to do 
+- documentation for your datasets and functions
+- lazy loading of your datasets
+- **the same functions and data are always sourced in every script file**
+
+## Version control
+
+And there's so much more scope in collaboration
+
+- split the project off and work on your own scripts away for a few days so you can break things
+- merge your work back together
+- roll back the project to a much earlier instance  
+
+# So much easier than you'd think
+
+## Work from your IDE 
+
+For `R` users, we have the wonderful [tidyverse](https://www.tidyverse.org/)
+
+> Uh-huh, so what does it involve?
+
+- **project** file system in RStudio instead of a **directory**
+- name an empty repository on your GitHub account 
+- `tidyverse` functions to turn your **project** into a **package**
+- track subprojects and assign people to them by saving files to GitHub 
+- the last part requires learning about five or six Git commands
+
+## Packaged analysis workflow
+
+*An example scenario:*
+
+Nick would like to see some exploratory analysis on a new project.
+
+Nick asks Ed to provide him with some modelling.
+
+Ed asks Alex to clean some data first.
+Alex cleans, then Ed models, Nick reads the report.
+
+- How would this run
+- compare with the *tidy* way
+
+## The No Free Lunch Theorem
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">ok now listen, the harsh truth is you&#39;re better off writing one thick, messy .Rmd where you keep all your garbage models and weird musings then going off on some precious folder structure and  artfully-named .R files where you can&#39;t find a damned thing ever. <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/oldman?src=hash&amp;ref_src=twsrc%5Etfw">#oldman</a></p>&mdash; Andrew MacDonald (@polesasunder) <a href="https://twitter.com/polesasunder/status/953624238266646529?ref_src=twsrc%5Etfw">January 17, 2018</a></blockquote>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+ 
+# I heart tidyverse
+ 
+## Dynamic file types
+
+
+```{r echo = FALSE, message = FALSE}
+
+library(shiny)
+
+library(tidyverse)
+
+```
+
+
+```{r Shiny app example, echo = FALSE}
+
+true_mean <- 5
+
+ 
+
+my_shinyapp <- shinyApp(
+
+  ui = shinyUI(fluidPage(
+
+    titlePanel("Example interactive simulation, CLT"),
+
+    sidebarLayout(
+
+      sidebarPanel(
+
+ 
+
+        sliderInput(inputId = "n",
+
+                    label = "sample size",
+
+                    min = 3,
+
+                    max = 1000,
+
+                    value = 3),
+
+        sliderInput(inputId = "N",
+
+                    label = "trials",
+
+                    min = 3,
+
+                    max = 1000,
+
+                    value = 3),
+
+        sliderInput(inputId = "alpha",
+
+                    label = "alpha",
+
+                    min = 0.0001,
+
+                    max = 0.95,
+
+                    value = 0.05)
+
+      ),
+
+      mainPanel(
+
+        textOutput("ratio"),
+
+        textOutput("prop"),
+
+        plotOutput("hist")# ,
+
+        # dataTableOutput("table")
+
+      )
+
+    )
+
+  )),
+
+  server = shinyServer(function(input, output){
+
+    ci_df <- reactive({
+
+      tibble(
+
+        n = rep(input$n, input$N),
+
+        sample = map(n, rnorm, mean = true_mean, sd = 1),
+
+        mean = map_dbl(sample, mean),
+
+        sd = map_dbl(sample, sd),
+
+        ci_lb = mean - qnorm(1 - input$alpha / 2) * sd / sqrt(n),
+
+        ci_ub = mean + qnorm(1 - input$alpha / 2) * sd / sqrt(n),
+
+        in_ci = true_mean > ci_lb & true_mean < ci_ub
+
+      )
+
+    })
+
+ 
+
+    # Ratio.
+
+    output$ratio <- renderText({
+
+      ratio <- round((input$n / input$N), 2)
+
+      paste("The ratio of the sample sizes divided by number of trials:", ratio)
+
+ 
+
+    })
+
+ 
+
+ 
+
+    # Proportion.
+
+    output$prop <- renderText({
+
+      paste(
+
+        "The proportion of confidence intervals that contain the true mean:",
+
+        round(sum(ci_df()$in_ci) / nrow(ci_df()), 2)
+
+      )
+
+    })
+
+ 
+
+    output$hist <- renderPlot({
+
+      ci_df() %>%
+
+        ggplot(aes(x = mean)) +
+
+        geom_histogram()
+
+    })
+
+ 
+
+    output$table <- renderDataTable({ci_df() %>% select(-sample)})
+
+ 
+
+  })
+
+)
+
+ 
+
+```
+
+```{r Run app, echo = F}
+my_shinyapp
+```
+ 
+
+ 
+
+ 
+
+##  Thank you for listening
+
+ 
+- [`R` for Data Science](http://r4ds.had.co.nz/)
+- [`R` packages](http://r-pkgs.had.co.nz/)
+- [tidyverse](https://www.tidyverse.org/)
+- [happy Git with `R`](http://happygitwithr.com/)
+- This presentation was compiled from a `.Rmd` document using the ioslides presentation format and `shiny` runtime. 
+ 
+ 
+
+ 

@@ -9,4 +9,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Useful
 
+After I `git clone <repo url>`, I think I may have to use this command. 
+
 `git push -u origin master` 
+
+Testing pushing.
