@@ -1,0 +1,49 @@
+---
+title: "initialising data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+```
+
+## Create an empty df with particular dimensions
+
+So this works. I wonder if there's a better way? 
+
+```{r }
+# Start by specifying number of rows.
+n_obs <- 5
+
+# I believe it's best practice to specify type at this stage.
+my_tibble <- tibble(
+  a_numeric = double(n_obs),
+  a_chararacter = character(n_obs),
+  a_boolean = logical(n_obs)
+)
+
+# Take a look.
+
+```
+
+```{r as a function}
+# Set number of observations.
+n_obs <- 5
+
+# Create a list of dfs
+list_of_df <- rep(n_obs, 5) %>% 
+  map(.f = function(x){
+    tibble(
+  a_numeric = double(n_obs),
+  a_chararacter = character(n_obs),
+  a_boolean = logical(n_obs)
+)
+  })
+
+# Take a look.
+list_of_df %>% str
+```
+
