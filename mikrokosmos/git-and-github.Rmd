@@ -7,6 +7,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## This could be the problem
+
+Need to set up crediantial caching for git to talk to github. From [JC](http://happygitwithr.com/credential-caching.html):
+
+`git config --global credential.helper 'cache --timeout=10000000'`
+
 ## Useful
 
 After I `git clone <repo url>`, I think I may have to use this command. 
@@ -16,3 +22,5 @@ After I `git clone <repo url>`, I think I may have to use this command.
 Testing pushing.
 
 Testing again.
+
+And again.
