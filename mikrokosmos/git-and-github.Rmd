@@ -76,6 +76,24 @@ git checkout -b pretty-branch
 
 ```
 
+Checkout remotes.
+
+```{bash}
+git remote -v
+```
+
+We need to set up the remotes for the new branch. I believe this way we push to our own origin, rather than the one on GitHub.
+
+```{bash}
+git push origin pretty-branch
+```
+
+Take another look at the remotes. Interesting, doesn't change.
+
+```{bash}
+git remote -v
+```
+
 The branch now exists.
 
 ```{bash}
@@ -88,6 +106,19 @@ Return to master takes us to the top of the tree.
 ```{bash}
 git checkout master
 ```
+
+We can switch back to the branch now that it exists thus.
+
+```{bash}
+git checkout pretty-branch
+```
+
+Returning to master, we'll be able to delete the branch.
+
+```{bash}
+git checkout master
+```
+
 
 We can then delete the branch.
 
