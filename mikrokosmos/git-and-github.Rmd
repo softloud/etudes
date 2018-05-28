@@ -10,7 +10,13 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## This could be the problem
+## Issue tag
+
+This is issue `#14`.
+
+## Installation and setup
+
+### Credential caching
 
 Need to set up crediantial caching for git to talk to github. From [JC](http://happygitwithr.com/credential-caching.html):
 
@@ -33,8 +39,10 @@ git status
 
 ```
 
+Call tree and set the level so it's not too verbose. 
+
 ```{bash}
-tree
+tree -L 2
 
 ```
 
