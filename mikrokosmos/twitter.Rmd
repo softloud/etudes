@@ -18,7 +18,7 @@ Alrighty, let's begin.
 ```{r Load packages}
 library(tidyverse)
 library(rtweet)
-library(rvest) # Another possible package to investigate.
+library(rvest)
 
 ```
 
@@ -58,7 +58,7 @@ cantabile_timeline %>% str(max.level = 1)
 
 ```
 
-## Find the string `"Stockholm"`
+## Find the string `"Stockholm"`.
 
 Let's make sure I understand how strings work. I may need to go to the `stringr` cheatsheet.
 
@@ -94,53 +94,34 @@ stockholm_vector
 ## Extract my tweets that mention Stockholm
 
 ```{r Filter to my tweets}
-# I hope my interpretation of the variables in the tibble is correct.
-
-stockholm_tweets <- cantabile_timeline %>% 
+my_tweets <- cantabile_timeline %>% 
   filter(is_quote == FALSE, # Remove quotes.
-         is_retweet == FALSE, # Remove retweets.
-         is.na(reply_to_status_id), # Remove replies.
-         grepl("Stockholm", text) | grepl("stockholm", text)) # Only those that mention "Stockholm"
+         is_retweet == FALSE # Remove retweets.
+         ) %>% 
+  mutate( # Tokenise text.
+    twit_vector = map(text, str_split, pattern = "\\s"),
+    twit_vector = tolower(twit_vector), # Convert words to lower case.
+    stockholm = map_lgl(twit_vector,
+                        .f = function(a_tweet) {
+                          "the" %in% a_tweet
+                        }) # See if Stockholm is there.
+         ) 
 
 # Take a look.
-stockholm_tweets$twit_vector[[1]]
+my_tweets$twit_vector[[1]]
 
 
 # Testing that Stockholm produces what I want.
-stockholm_tweets$stockholm %>% table()
+my_tweets$stockholm %>% table()
 
-# So, why does this work?
-stockholm_tweets$text[[1]] %>% str_split(pattern = " ")
+# %>% 
+#   filter(
+#     Stockholm == TRUE
+#   )
 
-# But not when I map over text?
-
-# Take a look.
-stockholm_tweets %>% 
-  select(created_at, text, status_id) %>% 
-  knitr::kable()
 
 ```
 
 
 ## Extract responses to those tweets
-
-```{r Try a join}
-# Or could just use a filter.
-tweets_replies <- cantabile_timeline %>% 
-  mutate( 
-    # See if tweet was a response to stockholm mentioning tweet.
-    reply_stockholm = reply_to_status_id %in% stockholm_tweets$status_id
-    ) %>%
-  filter(
-    # Get the replies.
-    reply_stockholm == TRUE
-  )
-
-cantabile_timeline %>% 
-  filter(reply_to_status_id == stockholm_tweets$status_id[[1]])
-
-
-```
-
-
 

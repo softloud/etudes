@@ -1,6 +1,9 @@
 ---
 title: "git and github"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -20,3 +23,67 @@ I got this working Wednesday May 9 in 2018, and I think I set it for about 32 we
 After I `git clone <repo url>`, I think I may have to use this command. 
 
 `git push -u origin master` 
+
+### Status update
+
+We can get the status, as well as a tree view of the files.
+
+```{bash}
+git status
+
+```
+
+```{bash}
+tree
+
+```
+
+
+## Remotes
+
+Setting a remote links the different copies of the git tree together.
+
+So far, it seems that a good workflow is to:
+
+- create a branch to solve a problem
+- connect branch to origin for the remote 
+
+I'm not sure what role forking has in the whole single-person workflow thing; perhaps I don't need to fork.
+
+If collaborating with others, however, it's important to fork and connect the branch to my fork. 
+
+## Branches
+
+List the existing branches.
+
+```{bash}
+git branch
+
+```
+
+Create a branch.
+
+```{bash}
+git checkout -b pretty-branch
+
+```
+
+The branch now exists.
+
+```{bash}
+git branch
+```
+
+
+Return to master takes us to the top of the tree.
+
+```{bash}
+git checkout master
+```
+
+We can then delete the branch.
+
+```{bash}
+git branch -d pretty-branch
+```
+
