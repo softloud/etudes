@@ -1,0 +1,181 @@
+---
+title: "purrr simulations"
+author: "Charles T. Gray"
+date: "2 July 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+```
+
+```{r load packages, message=FALSE}
+library(tidyverse)
+
+```
+
+
+A starting place is this [blogpost](https://aosmith.rbind.io/2018/06/05/a-closer-look-at-replicate-and-purrr/).
+
+But the author also points to earlier posts. I wonder if I should start there?
+
+Might as well. It's not like I'm busy ;) 
+
+## A linear model
+
+Following along with [this post](https://aosmith.rbind.io/2018/01/09/simulate-simulate-part1/).
+
+I quite like the way the author wrote up this linear model using an indicator variable. 
+
+$$
+y_t = \beta_0 + \beta_1 \cdot I_{\text{group}_t = \text{group}} + \varepsilon_t
+$$
+but I think still prefer the more generalisable 
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i 
+$$
+
+where  
+
+- $y_i \in \mathbb R$ is the $i^\text{th}$ observation
+- this model has two groups, so
+$$
+x_i = 
+\begin{cases}
+0 & \text{if } y_i \in  \text{group } 1\\
+1 & \text{if } y_i \in  \text{group } 2
+\end{cases}
+$$
+
+- $\beta_0$ represents the mean response for the first group
+- $\beta_1$ represents the *difference* between the two groups
+- the observations are assumed to be i.i.d. such that $y_i \sim N(0, \sigma^2)$ as a consequence of $\epsilon_i \sim N(0, \sigma^2)$
+
+I like thinking about it this way because I can see the generalisability to multiple dependent variables 
+
+```{r set seed}
+set.seed(16) # Ensures I will get the same results as the tutorial.
+
+```
+
+Curiously, I just learnt that we're not using true random number generator, but a *pseudo* random number generator that is *fully* algorithmic. This is deliberate for reproducibility. 
+
+We define the parameters of the mdoel. 
+
+```{r}
+ngroup <- 2
+nrep <- 10
+b0 <- 5
+b1 <- -2
+sd <- 2
+
+
+```
+
+Here the author does it one vector at a time, for educational purposes, but I think we can handle tidying this. 
+
+```{r}
+sim_data_lm <- tibble(# Assign to two groups - in this case equally.
+  group = rep(c("group1", "group2"), each = nrep)) %>%
+  mutate(
+    # Calculate the random error.
+    epsilon = rnorm(ngroup * nrep, 0, sd),
+    # Now simulate the observation using the model.
+    growth = b0 + b1 * (group == "group2") + epsilon # Nice trick!
+  )
+
+# Take a look.
+sim_data_lm %>% head() %>% knitr::kable()
+
+```
+
+Okay, now we can fit the model.
+
+```{r}
+lm(growth ~ group, data = sim_data_lm) %>% summary()
+
+```
+
+
+### Make a function for the simulaton
+
+Okay this also looks different from how I've been constructing simulations. Wrap each simulation as a function and vary the simulation parameters. Interesting! 
+
+```{r}
+twogroup_fun <- function(nrep = 10, b0 = 5, b1 = -2, sigma = 2) {
+  ngroup <- 2
+  sim_data <- tibble(# Assign to two groups - in this case equally.
+  group = rep(c("group1", "group2"), each = nrep)) %>%
+  mutate(
+    # Calculate the random error.
+    epsilon = rnorm(ngroup * nrep, 0, sd),
+    # Now simulate the observation using the model.
+    growth = b0 + b1 * (group == "group2") + epsilon # Nice trick!
+  )
+  # Return a summary of the model.
+  lm(growth ~ group, data = sim_data) %>% summary()
+}
+
+```
+
+### Repeat the simulation many times using `purrr`
+
+Wow! This is handy! 
+
+The `purrr::rerun` function is apparently analogous to `replicate` with `simplify = FALSE` but I've never used that one, so I'll promptly discard it! 
+
+```{r}
+sims <- rerun(1000, twogroup_fun())
+
+
+```
+
+### Let's tidy up a bit with `broom`
+
+The `broom::tidy` function gives us the coefficients of the 
+
+```{r}
+# Extract 
+
+sims %>%
+     map_df(broom::tidy) %>% head() %>% knitr::kable()
+
+
+```
+
+### Using broom functions to produce nice vis
+
+We can examine the distribution of the mean difference between the two groups $\beta_1$. I think is this mean difference, as in each coefficient estimate represents the expected value for that coefficient as estimated by the model from multiple observations. 
+
+```{r}
+sims %>%
+     map_df(broom::tidy) %>%
+     filter(term == "groupgroup2") %>% # To islate beta1
+     ggplot( aes(estimate) ) +
+          geom_density(fill = "blue", alpha = .5) +
+          geom_vline( xintercept = -2)
+
+```
+
+Distribution of estimates of the standard deviation.
+
+*This is a very nice trick.*
+
+```{r}
+
+# sims %>% 
+#   map_dbl(~summary(.x)$sigma) %>% 
+#   data.frame(sigma = .)
+
+
+```
+
+Curiously the above doesn't run for me. This is *not* an old post, though. Only from January. 
+
+> Todo here, try to figure out why that code doesn't work sometime (not now).
+
+
+
+
