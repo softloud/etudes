@@ -1,0 +1,87 @@
+---
+title: "purrr simulations blogpost"
+author: "Charles T. Gray"
+date: "6 July 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages}
+
+set.seed(16)
+
+
+```
+
+
+## The `replicate` function
+
+I'm pretty sure `purrr:rerun` is the same as replicate but with `simplify = FALSE`. 
+
+Anyway, interestingly, `replicate` is from the *apply* family of functions. 
+
+So, `replicate` takes three arguments:
+
+argument | description
+`n` | number of replications to perform
+`expr` | a function
+`simplify` | output as array or list
+
+This seems super handy for what I do. 
+
+The author considers the normal distributio and sampling from it some number of times. 
+
+Let's see how much I can figure out on my own. 
+
+```{r}
+# First I'll consider the rnorm function.
+rnorm(n = 6, mean = 3, sd = 2)
+
+# Then, how to do this 5 times?
+
+replicate(
+  n = 5,
+  rnorm(n = 6, mean = 3, sd = 2),
+  simplify = FALSE
+)
+
+
+```
+
+Okay, so good so far. 
+
+Note, if we use `simplify = TRUE` we get a matrix of results.
+
+```{r}
+replicate(
+  n = 5,
+  rnorm(n = 6, mean = 3, sd = 2),
+  simplify = TRUE
+)
+```
+
+## Wrap it up like a present in a function
+
+From the previous blogpost on writing simulations 
+
+
+```{r}
+twogroup_fun = function(nrep = 10, b0 = 5, b1 = -2, sigma = 2) {
+     ngroup = 2
+     group = rep( c("group1", "group2"), each = nrep)
+     eps = rnorm(ngroup*nrep, 0, sigma)
+     growth = b0 + b1*(group == "group2") + eps
+     growthfit = lm(growth ~ group)
+     growthfit
+}
+
+# Take it for a spin.
+twogroup_fun()
+
+```
+
+## Using `purrr::map` for looping through lists
+

@@ -1,0 +1,83 @@
+---
+title: "mash it up"
+author: "Charles T. Gray"
+date: "6 July 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r load packages}
+
+library(tidyverse)
+
+devtools::install_github("softloud/varameta") # While in development.
+library(varameta)
+
+```
+
+
+## Okay, so for the meta-analysis
+
+I want to run a simulation and replicate it many times.
+
+Let's do this for one set of parameters. 
+
+> How to do this for different distributions? This is it's own whole thing. I can't let this derail the whole meta-analysis simulation. 
+
+The author does this algorithmically, I should follow along with the steps. 
+
+1. Simulate some data and output some summary. 
+2. Create a function that simulates the data.
+3. Uses replicate to repeat the process many times. 
+
+## First simulate the data
+
+We want to simulate two arms. 
+
+I need to get the algebra right to get the code right.
+
+Let's start with assuming that for study $k$ from $K$ studies, we have observed sample medians $\hat\nu_1$ and $\hat\nu_2$, so we can calculate the log-ratio of the sample medians.   
+
+
+
+```{r simulation}
+
+# Choose a sample size.
+n <- 30
+
+# Choose a distribution.
+distribution <- "cauchy"
+parameters <- list(location = -3, scale = 1)
+
+# What does the probability density of this distribution look like?
+tibble(x = c(-5, 5)) %>% 
+  ggplot(aes(x = x)) + 
+  stat_function(fun = dcauchy, args = parameters)
+
+# Number of trials per simulation.
+trials <- 10
+
+```
+
+First we start with a random vector.
+
+```{r random vector}
+rcauchy(n = n, location = parameters[[1]], scale = parameters[[2]])
+```
+
+Now, we're going to want two random samples per trial.
+
+What the location and the scale are what *matter*. We need to generate them.
+
+We're assuming that $E(y_k) = \mu + \theta_k + \varepsilon_k$ with $\theta_k \sim (0, \tau)$ and $\varepsilon_k \sim N(0, \sigma^2)$. 
+
+
+
+## Wrap it in a function
+
+## Then use replicate or rerun to repeat the process for simulations
+
