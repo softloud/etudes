@@ -1,0 +1,123 @@
+---
+title: "meta-analysis of medians"
+subtile: "with `varameta`"
+author: "Charles T. Gray"
+date: "useR! 2018 Wednesday July 11"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, echo=FALSE, message=FALSE}
+library(tidyverse)
+library(varameta)
+
+```
+
+## in a nutshell
+
+meta-analysis is a statistical method of evidence synthesis of many studies
+
+conventional tools for meta-analysis require an *effect* and a **variance** of that effect
+
+why? $\because$ *inverse-variance weighting* of studies
+
+### example from R 
+
+[`metafor`](https://www.google.com/search?client=ubuntu&channel=fs&q=metafor%5D&ie=utf-8&oe=utf-8)::rma requires arguments $y_i$ and $v_i$
+
+### but what if there is no variance reported?
+
+what if the effect is reported as a median and the measure of spread is given as an interquartile range?
+
+## in this talk
+
+- a woefully glib intro to meta-analysis 
+- an illustrative meta-analysis dataset 
+- exploratory shiny apps
+- current solutions
+- `varameta` 
+
+# meta-analysis 
+
+## meta-analysis
+
+- meta-analysis is a method of *evidence synthesis* 
+- it is a way of combining together many studies' results
+- frequently impractical to work with anything other than a few summary statistics for each study
+
+## d-dimer levels in preeclampsia
+
+```{r echo = FALSE}
+varameta::pinheiro_data %>% 
+  rename(c_c = control_centre, 
+         s_c = control_spread,
+         n_t = control_n,
+         c_t = treatment_centre,
+         s_t = treatment_spread,
+         n_t = treatment_n,
+         c = centre_type,
+         s = spread_type) %>% 
+  knitr::kable()
+
+```
+$$\varepsilon \sim N(0, \sigma^2)$$
+
+`c_c` := control centre, `t_c` := treatment centre, `n_c` := control n
+ to 
+## does it work?
+
+say we're interested in the effect of a medical treatment
+
+```{}
+this study's effect = true effect + some error 
+```
+
+### to maths it 
+
+assume $K$ studies are randomly drawn from a larger population, and that the $k^{th}$ effect can thought of as 
+
+$$
+y_k = \mu + \varepsilon_k
+$$
+
+with $\mu$ the true population effect $\varepsilon \sim N(0, \sigma^2)$ representing sampling error
+
+## not all studies are created equal
+
+say, what if a study was conducted at a university and the participants were all aged < 25? 
+
+
+
+## meta-analysis: random effects  
+
+```{}
+this study's effect = true effect + study's unique factors + some error 
+```
+
+For the $k^{\text{th}}$
+
+$$
+y_k = \mu + \theta_k + \varepsilon_k
+$$
+
+where $\theta_k \sim N(0, \tau^2)$ is the random effect estimating variation between 
+studies and $\varepsilon \sim N(0, \sigma^2)$
+is a random effect estimating the sampling error
+
+## current solutions
+
+## a more scientifically cromulent estimator
+
+```{}
+shiny::runApp("mikrokosmos/shinyv", launch.browser = TRUE)
+```
+
+## simulations
+
+```{}
+shiny::runApp("mikrokosmos/shinyci", launch.browser = TRUE)
+```
+
