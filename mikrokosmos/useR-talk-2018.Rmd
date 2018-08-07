@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r packages, echo=FALSE, message=FALSE}
 library(tidyverse)
 library(varameta)
+library(metafor)
 
 ```
 
@@ -63,11 +64,10 @@ varameta::pinheiro_data %>%
   knitr::kable()
 
 ```
-$$\varepsilon \sim N(0, \sigma^2)$$
 
 `c_c` := control centre, `t_c` := treatment centre, `n_c` := control n
- to 
-## does it work?
+
+## does the treatment work?
 
 say we're interested in the effect of a medical treatment
 
@@ -85,11 +85,29 @@ $$
 
 with $\mu$ the true population effect $\varepsilon \sim N(0, \sigma^2)$ representing sampling error
 
+## inverse-variance weighting 
+
+the model estimates the **weighted** average of true effects 
+
+$$
+\theta_w = \frac{\sum w_i \theta_i}{\sum w_i}
+$$
+
+using *inverse variance* $w_i = 1/v_i$
+
+**this is why asymmetric spread measures pose a challenge in meta-analysis**
+
 ## not all studies are created equal
+
+weighting is **one** way to account for the strength or weakness of a study
+
+but what about differences 
+
+### studies are *not* the same 
 
 say, what if a study was conducted at a university and the participants were all aged < 25? 
 
-
+what if the drug was more effective on young people? 
 
 ## meta-analysis: random effects  
 
@@ -97,7 +115,7 @@ say, what if a study was conducted at a university and the participants were all
 this study's effect = true effect + study's unique factors + some error 
 ```
 
-For the $k^{\text{th}}$
+the effect of the $k^{\text{th}}$ study is assumed to be
 
 $$
 y_k = \mu + \theta_k + \varepsilon_k
@@ -107,9 +125,55 @@ where $\theta_k \sim N(0, \tau^2)$ is the random effect estimating variation bet
 studies and $\varepsilon \sim N(0, \sigma^2)$
 is a random effect estimating the sampling error
 
-## current solutions
+we can also add moderators as we do with linear models to control for various conditions 
 
-## a more scientifically cromulent estimator
+## returning to our example
+
+```{r echo = TRUE}
+varameta::pinheiro_data %>% select(study, year, centre_type, spread_type) %>% knitr::kable()
+```
+
+
+## existing methods
+
+leave the medians out 
+```{r fig.align='center'}
+ma_means_only <- pinheiro_data %>%
+  # choose on the studies reporting means
+  filter(centre_type == "mean") %>% 
+   # calculate mean difference
+  mutate(md = control_centre - treatment_centre,
+         # variance of mean difference
+         md_var = control_spread^2 + treatment_spread^2 
+         ) %>%   
+  rma(yi = md, vi = md_var, data = ., slab = study, measure = "MD") 
+# arguments required: effect and the variance of the effect 
+```
+
+## means only
+
+a *forest* plot of the means-only meta-analysis
+
+```{r}
+ma_means_only %>% forest()
+```
+
+## convert the medians
+
+several methods have been developed to approximate the mean and the standard deviation from reported quantiles
+
+
+## an estimation of the approximation
+
+we can estimate an approximation of the variance of the sample median
+
+$$
+Var(M) \approx \frac 1 {4n[f(\nu)]^2} \dot\approx \frac  1 {4 n [g(M)]^2}
+$$
+
+we can also use this to approximate the difference of medians and the log-ratio of medians
+
+### but what choice of $g$?
 
 ```{}
 shiny::runApp("mikrokosmos/shinyv", launch.browser = TRUE)
@@ -121,3 +185,71 @@ shiny::runApp("mikrokosmos/shinyv", launch.browser = TRUE)
 shiny::runApp("mikrokosmos/shinyci", launch.browser = TRUE)
 ```
 
+## now we can meta-analyse medians
+
+```{r}
+ma_medians_only <- pinheiro_data %>%
+  # choose only studies reporting medians
+  filter(centre_type == "median") %>% 
+  mutate(control_var = pmap_dbl( # calculate control variance
+    list(centre = control_centre,
+         spread = control_spread,
+         n = control_n,
+         centre_type = centre_type,
+         spread_type = spread_type), varameta::effect_se),
+    treatment_var = pmap_dbl( # calculate treatment variance
+    list(centre = treatment_centre,
+         spread = treatment_spread,
+         n = treatment_n,
+         centre_type = centre_type,
+         spread_type = spread_type), varameta::effect_se),
+    md = control_centre - treatment_centre, # median difference
+    md_var = control_var^2 + treatment_var^2) %>% 
+  rma(yi = md, vi = md_var, data = ., slab = study)
+
+```
+
+***
+
+```{r}
+ma_medians_only %>% forest()
+```
+
+
+## compare means and medians
+
+```{r echo = FALSE}
+ma_means_n_medians <- pinheiro_data %>%
+  # choose only studies reporting medians
+  mutate(control_var = pmap_dbl( # calculate control variance
+    list(centre = control_centre,
+         spread = control_spread,
+         n = control_n,
+         centre_type = centre_type,
+         spread_type = spread_type), varameta::effect_se),
+    treatment_var = pmap_dbl( # calculate treatment variance
+    list(centre = treatment_centre,
+         spread = treatment_spread,
+         n = treatment_n,
+         centre_type = centre_type,
+         spread_type = spread_type), varameta::effect_se),
+    md = control_centre - treatment_centre, # median difference
+    md_var = control_var^2 + treatment_var^2) %>% 
+  rma(yi = md, vi = md_var, data = ., slab = study, mod = (centre_type == "mean"))
+
+ma_means_n_medians %>% forest()
+
+```
+
+
+## next steps
+
+- tidy up the package and get it out there
+- add all the simulations
+- write up the paper
+- shiny website dashboard for non-R users
+
+### extensions
+
+- the `metameta` pkg that *tidies* meta-analyses
+- what can we infer about *distributions* from limited information? (lambda-distribution exploration)  
