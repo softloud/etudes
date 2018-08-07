@@ -1,0 +1,38 @@
+---
+title: "tredli"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, message=FALSE}
+library(tidyverse)
+```
+
+
+## power law
+
+Let $f(x) := ax^{-k}$
+
+```{r }
+power_law <- function(x, a, k) {
+  a * x ^ (-k)
+}
+
+```
+
+```{r}
+tibble(x = c(0,1)) %>% 
+  ggplot(aes(x = x)) +
+  stat_function(fun = power_law, args = list(a = 2, k = 2))
+
+```
+
+```{r}
+
+
+
+```
+
