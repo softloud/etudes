@@ -1,0 +1,97 @@
+# modern approach (temp)
+
+```{r}
+knitr::opts_chunk$set(error=TRUE)
+
+```
+
+```{r message=FALSE}
+# pkg
+library(tidyverse)
+library(janitor)
+library(gt)
+library(broom)
+
+```
+
+
+```{r message=FALSE}
+# read data
+playbill_dat <- read_csv('data/modernapproach/playbill.csv')
+
+# take a look at the raw data
+head(playbill_dat)
+
+```
+
+
+```{r}
+# visualise relationship prior to plotting
+playbil_vis <-
+    playbill_dat %>%
+        ggplot(aes(x = LastWeek, y = CurrentWeek)) +
+        geom_point() +
+        theme_minimal() + 
+        labs(
+            title = "Playbill weekly box office earnings",
+            x = "Previous week",
+            y = "Current week",
+            caption = 'playbill.csv'
+        )
+```
+
+We wish to test, first, if it plausible that $B_1 = 1$, under the assumption that each value of the Current week's box office earnings $y$ can be thought of in terms of an average boxoffice earnings and the previous week's earnings, allowing for some error per observation, so that $y = \beta_0 + \beta_1 x + \varepsilon$.
+
+A relevant example is the runtime example from the chapter (p.19). 
+
+
+```{r}
+# set results to check
+
+int <- 149.74770
+slope <- 0.25924
+
+prod_dat <- read_delim('data/modernapproach/production.txt',
+    col_names = c('Case', 'RunTime', 'RunSize'), col_types = 'd', skip = 1)  
+
+
+head(prod_dat)
+
+```
+
+
+```{r}
+
+prod_mod <- lm(RunTime ~ RunSize, data = prod_dat)
+
+# check I got the same as sheapther
+round(prod_mod$coef, 5) == c(int, slope)
+
+
+```
+
+
+
+```{r}
+
+# back to the playbill data
+playbill_mod <- lm(CurrentWeek ~ LastWeek, data = playbill_dat)
+
+summary(playbill_mod)
+
+playbill_mod$coef
+
+tidy(playbill_mod)
+augment(playbill_mod)
+glance(playbill_mod)
+
+round(confint(playbill_mod),4)
+
+
+
+```
+```{r}
+
+
+
+```
